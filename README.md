@@ -2,7 +2,7 @@
 
 A study site covering distributions, moments, conditional expectation and sampling, with derivations, worked examples and interactive visuals (including 3D models you can rotate).
 
-Live site: `https://YOUR-USERNAME.github.io/econ125-study-guide/`
+Live site: `https://gaarbra.github.io/econ125-study-guide/`
 
 ## What is in the repo
 

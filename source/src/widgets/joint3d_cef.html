@@ -1,0 +1,32 @@
+<div class="viz l4" data-w="joint3d">
+  <p class="nm">Interactive 3D: the conditional expectation function is the line through the slices</p>
+  <p class="vz-intro">Slide $x_0$ and watch the dashed conditional density move. Its center, $\E[Y\mid X=x_0]$, traces a straight line on the floor: that line is the CEF, the thing a regression estimates.</p>
+  <div class="seg" data-name="mode" role="group" aria-label="View">
+    <button type="button" data-v="joint" aria-pressed="false">Joint only</button>
+    <button type="button" data-v="cond" aria-pressed="true">Condition on $X$</button>
+  </div>
+  <canvas class="cv cv3" role="img" aria-label="3D surface with the conditional mean line drawn on the floor"></canvas>
+  <div class="row-btns">
+    <button type="button" class="btn" data-act="reset">Reset view</button>
+    <button type="button" class="btn" data-act="top">Top view</button>
+  </div>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">$\rho$</span><input type="range" data-k="rho" min="-0.9" max="0.9" step="0.05" value="0.6" data-dp="2"><output></output></label>
+    <label class="rg"><span class="rl">Tilt</span><input type="range" data-k="el" min="6" max="82" step="1" value="39" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma_X$</span><input type="range" data-k="sx" min="0.6" max="1.4" step="0.05" value="1" data-dp="2"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma_Y$</span><input type="range" data-k="sy" min="0.6" max="1.4" step="0.05" value="1" data-dp="2"><output></output></label>
+    <label class="rg" data-slice><span class="rl"><span data-lab="x">$x_0$</span><span data-lab="y" hidden>$y_0$</span></span><input type="range" data-k="u0" min="-3.7" max="3.7" step="0.05" value="1.2" data-dp="2"><output></output></label>
+  </div>
+  <label class="chk" data-cefrow><input type="checkbox" data-k="cef" checked><span>Draw $\E[Y\mid X=x]$ on the floor</span></label>
+  <div data-inset>
+    <canvas class="cv cv2 short" role="img" aria-label="Slice, conditional density and marginal"></canvas>
+  </div>
+  <p class="cap" data-cap="joint">Without conditioning you only see the surface. Switch on "Condition on $X$" to see the slices.</p>
+  <p class="cap" data-cap="cond">Each dashed curve is the distribution of $Y$ among people with $X=x_0$. Its mean sits on the black line, which has slope $\rho\,\sigma_Y/\sigma_X$. With $\rho=0$ the line is flat: knowing $X$ does not move the mean of $Y$, so $\E[Y\mid X]=\E[Y]$. Averaging that line over the distribution of $X$ gives $\E[Y]=0$: the Law of Iterated Expectations.</p>
+  <div class="ro">
+    <div><span>$\rho$</span><b data-o="rho"></b></div>
+    <div data-only="cond"><span>$f_X(x_0)$</span><b data-o="marg"></b></div>
+    <div data-only="cond"><span>$\E[Y\mid X=x_0]=\rho\frac{\sigma_Y}{\sigma_X}x_0$</span><b data-o="ecx"></b></div>
+    <div data-only="cond"><span>$\var[Y\mid X=x_0]=\sigma_Y^2(1-\rho^2)$</span><b data-o="vcx"></b></div>
+  </div>
+</div>

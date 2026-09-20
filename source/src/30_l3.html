@@ -1,0 +1,165 @@
+<section class="lec l3" id="l3">
+<header>
+  <h2>Lecture 3: Summarizing distributions</h2>
+  <p class="reading">Wooldridge Appendix B, <span class="nw">pp 691-704</span></p>
+</header>
+
+<p>Full distributions are hard to compare and impossible to plot in more than two dimensions. Summary statistics, called moments when applied to a population, squeeze a distribution into a few numbers.</p>
+
+<h3>Expectation: where the distribution sits</h3>
+
+<div class="fx">
+  <p class="nm">Expected value</p>
+  <p class="lab">Discrete</p>
+  <div class="eq">$$\E[X]=\sum_{x\in\mathrm{Supp}(X)}x\,f_X(x)$$</div>
+  <p class="lab">Continuous</p>
+  <div class="eq">$$\E[X]=\int_{-\infty}^{\infty}x\,f_X(x)\,dx$$</div>
+  <p class="nt">The probability-weighted average outcome. It is the balancing point of the distribution and your best guess for $X$ if you know nothing else.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Expectation of a function</p>
+  <div class="eq">$$\E[g(X)]=\sum_x g(x)\,f_X(x)$$</div>
+  <div class="eq">$$\E[g(X,Y)]=\sum_x\sum_y g(x,y)\,f_{X,Y}(x,y)$$</div>
+  <p class="nt">Functions of two variables need the joint pdf.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Linearity</p>
+  <div class="eq">$$\E[c]=c$$</div>
+  <div class="eq">$$\E[aX+b]=a\,\E[X]+b$$</div>
+  <div class="eq">$$\E\Big[b+\sum_{j=1}^{N}a_jX_j\Big]=b+\sum_{j=1}^{N}a_j\,\E[X_j]$$</div>
+  <p class="nt">No independence needed. Expectation is an average, and averages are linear.</p>
+</div>
+
+<div class="trap">
+  <p class="nm">Common trap</p>
+  <p>$\E[X^2]\ne(\E[X])^2$. In general $\E[g(X)]\ne g(\E[X])$. Compute $\E[X^2]$ as $\sum x^2 f_X(x)$.</p>
+</div>
+
+<h3>Variance: how spread out it is</h3>
+
+<div class="fx">
+  <p class="nm">Variance and standard deviation</p>
+  <div class="eq">$$\var[X]=\sigma_X^2=\E\big[(X-\mu_X)^2\big]=\E[X^2]-\mu_X^2$$</div>
+  <div class="eq">$$\sd[X]=\sigma_X=\sqrt{\var[X]}$$</div>
+  <p class="nt">Average squared distance from the mean. Units are X squared, so the standard deviation brings you back to the units of X.</p>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation of the shortcut $\E[X^2]-\mu^2$</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Expand the square.</p>
+      <div class="eq">$$\E[(X-\mu)^2]=\E[X^2-2\mu X+\mu^2]$$</div></li>
+    <li><p class="why">Apply linearity.</p>
+      <div class="eq">$$=\E[X^2]-2\mu\,\E[X]+\mu^2$$</div></li>
+    <li><p class="why">Use $\E[X]=\mu$.</p>
+      <div class="eq">$$=\E[X^2]-2\mu^2+\mu^2=\E[X^2]-\mu^2$$</div></li>
+  </ol></div>
+</details>
+
+<div class="fx">
+  <p class="nm">Scaling and shifting</p>
+  <div class="eq">$$\var[aX+b]=a^2\,\var[X]$$</div>
+  <div class="eq">$$\sd[aX+b]=|a|\,\sd[X]$$</div>
+  <p class="nt">Adding a constant does not change variability. Multiplying by $a$ multiplies variance by $a^2$. Only constants have zero variance. Proof: $aX+b-\E[aX+b]=a(X-\mu)$, then square and take expectations.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Standardizing (z-score)</p>
+  <div class="eq">$$Z=\frac{X-\mu_X}{\sigma_X}$$</div>
+  <div class="eq">$$\E[Z]=0,\qquad \var[Z]=1$$</div>
+  <p class="nt">Unitless, so you can compare variables measured in different units, like test scores or neural activation.</p>
+</div>
+
+<!--W:scale-->
+<h3>Covariance and correlation: how two variables move together</h3>
+
+<div class="fx">
+  <p class="nm">Covariance</p>
+  <div class="eq">$$\begin{aligned}\cov[X,Y]&=\E\big[(X-\mu_X)(Y-\mu_Y)\big]\\&=\E[XY]-\mu_X\mu_Y\end{aligned}$$</div>
+  <p class="nt">Also written $\sigma_{XY}$. Shared variation. Each joint outcome contributes the product of its deviations from the means, weighted by its probability. Outcomes in the upper right and lower left push covariance up, the other two push it down (slides 23-24).</p>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation of the shortcut $\E[XY]-\mu_X\mu_Y$</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Expand the product inside the expectation.</p>
+      <div class="eq">$$\E\big[XY-\mu_Y X-\mu_X Y+\mu_X\mu_Y\big]$$</div></li>
+    <li><p class="why">Apply linearity and use $\E[X]=\mu_X$, $\E[Y]=\mu_Y$.</p>
+      <div class="eq">$$\begin{aligned}&=\E[XY]-\mu_Y\mu_X-\mu_X\mu_Y+\mu_X\mu_Y\\&=\E[XY]-\mu_X\mu_Y\end{aligned}$$</div></li>
+  </ol></div>
+</details>
+
+<div class="fx">
+  <p class="nm">Correlation</p>
+  <div class="eq">$$\begin{aligned}\corr[X,Y]=\rho_{XY}&=\frac{\cov[X,Y]}{\sd[X]\,\sd[Y]}\\[1ex]&=\cov\!\left[\frac{X-\mu_X}{\sigma_X},\,\frac{Y-\mu_Y}{\sigma_Y}\right]\end{aligned}$$</div>
+  <p class="nt">Unit-free: the covariance of the standardized variables.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Properties</p>
+  <ul>
+    <li>$\cov[X,X]=\var[X]$</li>
+    <li>$\cov[a_1X+b_1,\ a_2Y+b_2]=a_1a_2\,\cov[X,Y]$</li>
+    <li>Cauchy-Schwarz: $|\cov[X,Y]|\le\sd[X]\,\sd[Y]$, so $-1\le\rho_{XY}\le1$</li>
+    <li>Independent implies $\cov[X,Y]=0$, because $\E[XY]=\sum_x\sum_y xy\,f_X(x)f_Y(y)=\E[X]\E[Y]$</li>
+  </ul>
+</div>
+
+<div class="trap">
+  <p class="nm">Common trap</p>
+  <p>Independence implies zero covariance, but zero covariance does not imply independence. Let $X$ be uniform on $\{-1,0,1\}$ and $Y=X^2$. Then $\cov[X,Y]=\E[X^3]-\E[X]\E[X^2]=0$, yet $Y$ is completely determined by $X$. Correlation only measures linear association.</p>
+</div>
+
+<!--W:cov-->
+<h3>Variance of sums</h3>
+
+<div class="fx">
+  <p class="nm">Two variables</p>
+  <div class="eq">$$\begin{aligned}\var[aX+bY]&=a^2\var[X]+b^2\var[Y]\\&\quad+2ab\,\cov[X,Y]\end{aligned}$$</div>
+  <p class="nt">The variability of a sum is each piece's variability plus their co-variability, counted twice.</p>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Variance is a covariance with itself.</p>
+      <div class="eq">$$\var[aX+bY]=\cov[aX+bY,\ aX+bY]$$</div></li>
+    <li><p class="why">Covariance is linear in each argument, so expand into four terms.</p>
+      <div class="eq">$$\begin{aligned}&=a^2\cov[X,X]+ab\,\cov[X,Y]\\&\quad+ab\,\cov[Y,X]+b^2\cov[Y,Y]\end{aligned}$$</div></li>
+    <li><p class="why">Use $\cov[X,Y]=\cov[Y,X]$ and $\cov[X,X]=\var[X]$.</p>
+      <div class="eq">$$\begin{aligned}&=a^2\var[X]+2ab\,\cov[X,Y]\\&\quad+b^2\var[Y]\end{aligned}$$</div></li>
+  </ol></div>
+</details>
+
+<div class="fx">
+  <p class="nm">Many variables</p>
+  <div class="eq">$$\begin{aligned}
+\var\Big[\sum_{i=1}^{N}a_iX_i\Big]&=\sum_{i=1}^{N}a_i^2\var[X_i]\\
+&\quad+2\sum_{i=1}^{N-1}\sum_{j=i+1}^{N}a_ia_j\cov[X_i,X_j]
+\end{aligned}$$</div>
+  <p class="nt">If the $X_i$ are independent, or just uncorrelated, every cross term is zero and only the variance terms remain. This is the engine behind the standard error in Lecture 4.</p>
+</div>
+
+<!--W:varsum-->
+<h3>Higher moments</h3>
+<div class="fx">
+  <p class="nm">Skew and kurtosis</p>
+  <div class="eq">$$\skew[X]=\E[Z^3]=\E\!\left[\frac{(X-\mu)^3}{\sigma^3}\right]$$</div>
+  <div class="eq">$$\kurt[X]=\E[Z^4]=\E\!\left[\frac{(X-\mu)^4}{\sigma^4}\right]$$</div>
+  <p class="nt">Symmetric distributions have skew 0. Normal distributions have kurtosis 3. The slides treat higher moments as minor, as long as they are finite.</p>
+</div>
+
+<div class="ex l3">
+  <p class="nm">Running example: degree and wage</p>
+  <div class="eq">$$\E[Y]=20(.25)+40(.40)+60(.35)=42$$</div>
+  <div class="eq">$$\E[X]=.5$$</div>
+  <div class="eq">$$\E[XY]=20(.05)+40(.20)+60(.25)=24$$</div>
+  <div class="eq">$$\cov[X,Y]=24-(.5)(42)=3$$</div>
+  <div class="eq">$$\var[Y]=\E[Y^2]-42^2=2000-1764=236$$</div>
+  <div class="eq">$$\sd[Y]=\sqrt{236}\approx15.36$$</div>
+  <div class="eq">$$\corr[X,Y]=\frac{3}{(.5)(15.36)}\approx0.39$$</div>
+  <p>A degree goes with higher wages, with a moderate positive correlation. Only the $X=1$ rows contribute to $\E[XY]$, since $X=0$ zeroes the product.</p>
+</div>
+</section>

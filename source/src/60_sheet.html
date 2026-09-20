@@ -1,0 +1,58 @@
+<section class="lec ls" id="sheet">
+<header>
+  <h2>Formula sheet</h2>
+  <p class="reading">Sized for the one page of handwritten notes the syllabus allows. It has to be handwritten, since machine-printed text costs 3 percent, so copy it by hand.</p>
+</header>
+
+<h3>Distributions (Lecture 2)</h3>
+<div class="sheet">
+  <div class="sc l2"><p class="nm">cdf and interval probability</p>
+    <div class="eq">$$F_X(x)=\Pr\{X\le x\}$$</div>
+    <div class="eq">$$\Pr\{x_1<X\le x_2\}=F(x_2)-F(x_1)$$</div></div>
+  <div class="sc l2"><p class="nm">Marginal</p>
+    <div class="eq">$$f_X(x)=\int f_{X,Y}(x,y)\,dy$$</div></div>
+  <div class="sc l2"><p class="nm">Conditional pdf</p>
+    <div class="eq">$$f_{Y|X}(y\mid x)=\frac{f_{X,Y}(x,y)}{f_X(x)}$$</div></div>
+  <div class="sc l2"><p class="nm">Independence</p>
+    <div class="eq">$$f_{X,Y}=f_X\,f_Y\iff f_{Y|X}=f_Y$$</div></div>
+</div>
+
+<h3>Moments (Lecture 3)</h3>
+<div class="sheet">
+  <div class="sc l3"><p class="nm">Expectation</p>
+    <div class="eq">$$\E[X]=\sum x\,f_X(x)$$</div>
+    <div class="eq">$$\E[aX+b]=a\E[X]+b$$</div></div>
+  <div class="sc l3"><p class="nm">Variance</p>
+    <div class="eq">$$\var[X]=\E[X^2]-\mu^2$$</div>
+    <div class="eq">$$\var[aX+b]=a^2\var[X]$$</div></div>
+  <div class="sc l3"><p class="nm">z-score</p>
+    <div class="eq">$$Z=\frac{X-\mu}{\sigma}$$</div></div>
+  <div class="sc l3"><p class="nm">Covariance</p>
+    <div class="eq">$$\cov[X,Y]=\E[XY]-\mu_X\mu_Y$$</div></div>
+  <div class="sc l3"><p class="nm">Correlation</p>
+    <div class="eq">$$\rho=\frac{\cov[X,Y]}{\sigma_X\sigma_Y},\quad -1\le\rho\le1$$</div></div>
+  <div class="sc l3"><p class="nm">Variance of a sum</p>
+    <div class="eq">$$\begin{aligned}\var[aX+bY]&=a^2\var[X]+b^2\var[Y]\\&\quad+2ab\cov[X,Y]\end{aligned}$$</div></div>
+  <div class="sc l3"><p class="nm">Independence and covariance</p>
+    <p class="nt" style="margin-top:2px">Independent implies $\cov=0$. Not the reverse.</p></div>
+  <div class="sc l3"><p class="nm">Skew and kurtosis</p>
+    <div class="eq">$$\E[Z^3],\qquad \E[Z^4]\ (\text{normal}=3)$$</div></div>
+</div>
+
+<h3>Conditioning and estimation (Lecture 4)</h3>
+<div class="sheet">
+  <div class="sc l4"><p class="nm">Pass-through</p>
+    <div class="eq">$$\begin{gathered}\E[g(X)Y+h(X)\mid X]\\=g(X)\E[Y\mid X]+h(X)\end{gathered}$$</div></div>
+  <div class="sc l4"><p class="nm">LIE and tower</p>
+    <div class="eq">$$\E\big[\E[Y\mid X]\big]=\E[Y]$$</div>
+    <div class="eq">$$\E\big[\E[Y\mid X,Z]\mid X\big]=\E[Y\mid X]$$</div></div>
+  <div class="sc l4"><p class="nm">Unbiased and bias</p>
+    <div class="eq">$$\E[W]=\theta,\qquad \Bias=\E[W]-\theta$$</div></div>
+  <div class="sc l4"><p class="nm">Sample average</p>
+    <div class="eq">$$\E[\bar Y]=\mu$$</div>
+    <div class="eq">$$\var[\bar Y]=\frac{\sigma^2}{n},\quad\se[\bar Y]=\frac{\sigma}{\sqrt n}$$</div></div>
+  <div class="sc l4"><p class="nm">Sample variance</p>
+    <div class="eq">$$S^2=\frac{1}{n-1}\sum(Y_i-\bar Y)^2$$</div>
+    <div class="eq">$$\E[S^2]=\sigma^2$$</div></div>
+</div>
+</section>

@@ -1,0 +1,37 @@
+<div class="viz l4" data-w="sampling">
+  <p class="nm">Interactive: an estimator is a random variable</p>
+  <p class="vz-intro">The population has mean 75 and standard deviation 25 (the slides' setup). Each draw takes a sample of size $n$ and computes the estimator. Repeat many times and the histogram below is its sampling distribution.</p>
+  <div class="seg" data-name="est" role="group" aria-label="Estimator">
+    <button type="button" data-v="mean" aria-pressed="true">$\bar Y$</button>
+    <button type="button" data-v="y1" aria-pressed="false">$Y_1$ only</button>
+    <button type="button" data-v="s2" aria-pressed="false">$S^2$ ($n-1$)</button>
+    <button type="button" data-v="sn" aria-pressed="false">$S^2$ ($n$)</button>
+  </div>
+  <div class="seg" data-name="pop" role="group" aria-label="Population">
+    <button type="button" data-v="ln" aria-pressed="true">Lognormal population</button>
+    <button type="button" data-v="norm" aria-pressed="false">Normal population</button>
+  </div>
+  <div class="ctl">
+    <label class="rg"><span class="rl">$n$</span><input type="range" data-k="n" min="0" max="9" step="1" value="2"><span data-o="nlab" style="text-align:right;color:var(--muted)"></span></label>
+  </div>
+  <div class="row-btns">
+    <button type="button" class="btn" data-act="d1">Draw 1 sample</button>
+    <button type="button" class="btn" data-act="d100">Draw 100 samples</button>
+    <button type="button" class="btn" data-act="d1000">Draw 1,000 samples</button>
+    <button type="button" class="btn" data-act="reset">Reset</button>
+  </div>
+  <p class="cap" style="margin:6px 0 2px"><strong>Top:</strong> the most recent single sample (bars) against the population (dashed). The vertical line is that sample's estimate.</p>
+  <canvas class="cv cv-a short" role="img" aria-label="Histogram of one sample against the population density"></canvas>
+  <p class="cap" style="margin:6px 0 2px"><strong>Bottom:</strong> the estimates from every sample so far, which is the sampling distribution.</p>
+  <canvas class="cv cv-b" role="img" aria-label="Histogram of the estimator across many samples"></canvas>
+  <div class="ro">
+    <div><span>Samples drawn</span><b data-o="count"></b></div>
+    <div><span>True value $\theta$</span><b data-o="th"></b></div>
+    <div><span>Average of the estimates</span><b data-o="mean"></b></div>
+    <div><span>Bias (average minus $\theta$)</span><b data-o="bias"></b></div>
+    <div><span>SD of the estimates (standard error)</span><b data-o="sd"></b></div>
+    <div><span>Theory: $\sigma/\sqrt n$ for $\bar Y$</span><b data-o="theory"></b></div>
+    <div><span>Expected value of this estimator</span><b data-o="expect"></b></div>
+  </div>
+  <p class="cap" data-o="cap"></p>
+</div>

@@ -1,0 +1,18 @@
+<div class="viz l1" data-w="select">
+  <p class="nm">Interactive: why randomization matters</p>
+  <p class="vz-intro">Each dot is a worker. One more year of education truly raises wage by 2. Unobserved ability (color, blue to red) also raises wage, and it can also decide who gets more education.</p>
+  <div class="ctl">
+    <label class="rg"><span class="rl">$\gamma$</span><input type="range" data-k="g" min="0" max="0.95" step="0.05" value="0.7" data-dp="2"><output></output></label>
+  </div>
+  <p class="cap" style="margin-top:0">$\gamma=0$ is a randomized experiment. Larger $\gamma$ means ability drives who gets more education (self-selection).</p>
+  <label class="chk"><input type="checkbox" data-k="hold"><span>Hold ability fixed (compare people with the same ability)</span></label>
+  <div class="row-btns"><button type="button" class="btn" data-act="resample">New sample</button></div>
+  <canvas class="cv tall" role="img" aria-label="Scatter of wage against education with fitted lines"></canvas>
+  <div class="ro">
+    <div><span>Slope of the fitted line</span><b data-o="naive"></b></div>
+    <div><span>Slope holding ability fixed</span><b data-o="ctrl"></b></div>
+    <div><span>True effect (dashed amber line)</span><b data-o="true"></b></div>
+    <div><span>Bias of the fitted line</span><b data-o="bias"></b></div>
+  </div>
+  <p class="cap" data-o="cap"></p>
+</div>

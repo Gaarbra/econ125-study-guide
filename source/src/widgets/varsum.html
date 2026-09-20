@@ -1,0 +1,20 @@
+<div class="viz l3" data-w="varsum">
+  <p class="nm">Interactive: where the variance of a sum comes from</p>
+  <p class="vz-intro">Change the weights, the spreads and the correlation. Each bar below is one term of $\var[aX+bY]$, in the same color as its card.</p>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">$a$</span><input type="range" data-k="a" min="-2" max="2" step="0.1" value="1" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$b$</span><input type="range" data-k="b" min="-2" max="2" step="0.1" value="1" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma_X$</span><input type="range" data-k="sx" min="0.5" max="2" step="0.1" value="1" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma_Y$</span><input type="range" data-k="sy" min="0.5" max="2" step="0.1" value="1.5" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$\rho$</span><input type="range" data-k="rho" min="-0.9" max="0.9" step="0.05" value="0.5" data-dp="2"><output></output></label>
+  </div>
+  <div class="tcards">
+    <div class="tcard" style="--tc:var(--c2)">$a^2\var[X]$<b data-o="t1"></b></div>
+    <div class="tcard" style="--tc:var(--c3)">$b^2\var[Y]$<b data-o="t2"></b></div>
+    <div class="tcard" style="--tc:var(--warn)">$2ab\,\cov[X,Y]$<b data-o="t3"></b></div>
+    <div class="tcard" style="--tc:var(--ink)">$\var[aX+bY]$<b data-o="tot"></b></div>
+  </div>
+  <canvas class="cv" style="height:230px" role="img" aria-label="Bars showing each term of the variance of a sum"></canvas>
+  <div class="ro"><div><span>$\cov[X,Y]=\rho\sigma_X\sigma_Y$</span><b data-o="cov"></b></div></div>
+  <p class="cap" data-o="cap"></p>
+</div>

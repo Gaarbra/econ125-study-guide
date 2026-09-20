@@ -1,0 +1,134 @@
+<section class="lec l2" id="l2">
+<header>
+  <h2>Lecture 2: Modeling distributions</h2>
+  <p class="reading">Wooldridge Appendix B, <span class="nw">pp 684-691 and 704-710</span></p>
+</header>
+
+<p>A random variable $X$ measures a feature of an individual drawn from a population. A probability model gives the relative likelihood of each outcome, which tells you the expected outcome, how variable outcomes are, and which ones would be surprising. Think of a pdf as the histogram from a census of the whole population.</p>
+
+<h3>pdf and cdf</h3>
+
+<div class="fx">
+  <p class="nm">Probability density function (pdf)</p>
+  <div class="eq">$$f_X(x)=\Pr\{X=x\}$$</div>
+  <p class="lab">Discrete: sums to 1</p>
+  <div class="eq">$$f_X(x)\ge 0,\qquad \sum_{x\in\mathrm{Supp}(X)}f_X(x)=1$$</div>
+  <p class="lab">Continuous: integrates to 1</p>
+  <div class="eq">$$\int_{-\infty}^{\infty}f_X(x)\,dx=1$$</div>
+  <p class="nt">For a continuous variable, $f_X$ is a density, not a probability. Probabilities are areas under it.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Cumulative distribution function (cdf)</p>
+  <div class="eq">$$F_X(x)=\Pr\{X\le x\}$$</div>
+  <p class="lab">Continuous</p>
+  <div class="eq">$$F_X(x)=\int_{-\infty}^{x}f_X(s)\,ds$$</div>
+  <p class="lab">Discrete</p>
+  <div class="eq">$$F_X(x)=\sum_{s\le x}f_X(s)$$</div>
+  <p class="nt">Nondecreasing, and bounded between 0 and 1.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Computing probabilities from the cdf</p>
+  <div class="eq">$$\Pr\{X>x\}=1-F_X(x)$$</div>
+  <div class="eq">$$\Pr\{x_1<X\le x_2\}=F_X(x_2)-F_X(x_1)$$</div>
+</div>
+
+<div class="fx">
+  <p class="nm">Quantile function (inverse cdf)</p>
+  <div class="eq">$$F_X^{-1}(q)=\min\{x\in\mathrm{Supp}(X):\Pr\{X\le x\}\ge q\}$$</div>
+  <p class="nt">The median is the 50th quantile.</p>
+</div>
+
+<div class="ex l2">
+  <p class="nm">Example: standard normal (slide 8)</p>
+  <div class="eq">$$\begin{gathered}\Pr\{-1.75<X<-0.25\}\\=F(-0.25)-F(-1.75)\\=0.4013-0.0401=0.3612\end{gathered}$$</div>
+  <p>The slide shades the area below $-0.25$ and subtracts the area below $-1.75$. What is left is the blue region between them.</p>
+</div>
+
+<!--W:pdf-->
+<h3>Joint, marginal and conditional distributions</h3>
+<p>The joint distribution describes two variables at once, like household income and consumption. Marginals and conditionals are two different ways of reducing it.</p>
+
+<div class="fx">
+  <p class="nm">Joint</p>
+  <div class="eq">$$f_{X,Y}(x,y)=\Pr\{X=x,\ Y=y\}$$</div>
+</div>
+
+<div class="fx">
+  <p class="nm">Marginal: sum out the other variable</p>
+  <div class="eq">$$f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dy$$</div>
+  <div class="eq">$$f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dx$$</div>
+  <p class="nt">Use sums instead of integrals for discrete variables. Picture turning the joint histogram on its side and adding up the mass in each bin.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Conditional</p>
+  <div class="eq">$$f_{Y|X}(y\mid x)=\frac{f_{X,Y}(x,y)}{f_X(x)}$$</div>
+  <p class="nt">The distribution of Y among the part of the population with $X=x$. It is a different function of $y$ for each $x$.</p>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation of the conditional pdf</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Take the slice of the joint histogram where $X=x$. It holds only the share $f_X(x)$ of the population, so it does not sum to 1.</p>
+      <div class="eq">$$\sum_y f_{X,Y}(x,y)=f_X(x)$$</div></li>
+    <li><p class="why">Rescale by the share of the population in the slice.</p>
+      <div class="eq">$$\begin{aligned}\Pr\{Y=y\mid X=x\}&=\frac{\Pr\{X=x,\ Y=y\}}{\Pr\{X=x\}}\\&=\frac{f_{X,Y}(x,y)}{f_X(x)}\end{aligned}$$</div></li>
+    <li><p class="why">Check that it is a proper distribution.</p>
+      <div class="eq">$$\sum_y f_{Y|X}(y\mid x)=\frac{f_X(x)}{f_X(x)}=1$$</div></li>
+  </ol></div>
+</details>
+
+<div class="tbl">
+<table>
+  <thead><tr><th>Name</th><th>Notation</th><th>What it describes</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Marginal</th><td>$f_X(x),\ f_Y(y)$</td><td>One variable across the whole population</td></tr>
+    <tr><th scope="row">Joint</th><td>$f_{X,Y}(x,y)$</td><td>Both variables together</td></tr>
+    <tr><th scope="row">Conditional</th><td>$f_{Y|X}(y\mid x)$</td><td>One variable with the other held at a value</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!--W:joint3d-->
+<h3>Independence</h3>
+<div class="fx">
+  <p class="nm">Independence (each line implies the others)</p>
+  <div class="eq">$$f_{X,Y}(x,y)=f_X(x)\,f_Y(y)$$</div>
+  <div class="eq">$$f_{Y|X}(y\mid x)=\frac{f_X(x)f_Y(y)}{f_X(x)}=f_Y(y)$$</div>
+  <div class="eq">$$\Pr\{X=x,\ Y=y\}=\Pr\{X=x\}\Pr\{Y=y\}$$</div>
+  <p class="nt">Every slice of the joint histogram has the same shape, so knowing $X$ tells you nothing about $Y$.</p>
+</div>
+
+<p><strong>Why it matters</strong></p>
+<ul>
+  <li><strong>Ceteris paribus on average.</strong> In a randomized trial, a coin flip assigns drug or placebo, so assignment is independent of everything else that affects the outcome.</li>
+  <li><strong>Sampling.</strong> Independent draws each add new information, so information accumulates as n grows.</li>
+</ul>
+<p><strong>Where it fails:</strong> time series (effects persist), spatial or network samples, grouped treatments (a family that misses a flight together), and selected samples (people who sign up for a study share features the population does not).</p>
+
+<h3>Running example: degree and wage</h3>
+<div class="ex l2">
+  <p class="nm">My example, not from the slides. I reuse it in Lectures 3 and 4.</p>
+  <p>Let $X=1$ if a person has a degree and $0$ otherwise, and let $Y$ be hourly wage in dollars. Joint distribution with marginals:</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th class="n">Y=20</th><th class="n">Y=40</th><th class="n">Y=60</th><th class="n">$f_X$</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">X=0</th><td class="n">.20</td><td class="n">.20</td><td class="n">.10</td><td class="n">.50</td></tr>
+      <tr><th scope="row">X=1</th><td class="n">.05</td><td class="n">.20</td><td class="n">.25</td><td class="n">.50</td></tr>
+      <tr><th scope="row">$f_Y$</th><td class="n">.25</td><td class="n">.40</td><td class="n">.35</td><td class="n">1</td></tr>
+    </tbody>
+  </table></div>
+  <p>Conditional distributions, each a row divided by its total. For example, $f_{Y|X}(60\mid 1)=.25/.50=.5$.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th class="n">Y=20</th><th class="n">Y=40</th><th class="n">Y=60</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">$f_{Y|X}(y\mid 0)$</th><td class="n">.4</td><td class="n">.4</td><td class="n">.2</td></tr>
+      <tr><th scope="row">$f_{Y|X}(y\mid 1)$</th><td class="n">.1</td><td class="n">.4</td><td class="n">.5</td></tr>
+    </tbody>
+  </table></div>
+  <p>The two slices differ, so degree and wage are not independent.</p>
+</div>
+<!--W:bars3d-->
+</section>

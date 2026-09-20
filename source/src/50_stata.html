@@ -1,0 +1,42 @@
+<section class="lec ls" id="stata">
+<header>
+  <h2>Stata (Lectures 1 to 3)</h2>
+  <p class="reading">Interactive mode for exploring, do-files for anything you will turn in</p>
+</header>
+
+<div class="tbl"><table>
+  <thead><tr><th>Task</th><th>Commands</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Inspect</th><td><code>describe</code> <code>list</code> <code>codebook</code> <code>tabulate</code></td><td>Missing values show as <code>.</code> for numeric variables and blank for strings.</td></tr>
+    <tr><th scope="row">Create</th><td><code>generate</code> <code>replace ... if</code></td><td><code>&amp;</code> and, <code>|</code> or, <code>!</code> not, <code>==</code> tests equality, <code>=</code> assigns.</td></tr>
+    <tr><th scope="row">Summarize</th><td><code>summarize</code> <code>tabstat x, stats(mean sd sdmean n)</code></td><td>Univariate summary statistics.</td></tr>
+    <tr><th scope="row">Correlate</th><td><code>correlate</code> <code>pwcorr, sig</code></td><td><code>correlate</code> drops any row with a missing value (listwise). <code>pwcorr</code> uses all available pairs. Add <code>, covariance</code> to <code>correlate</code> for covariances.</td></tr>
+    <tr><th scope="row">Run code</th><td>Ctrl+D (Windows) or Shift+Cmd+D (Mac)</td><td>Runs the selected lines of a do-file.</td></tr>
+  </tbody>
+</table></div>
+
+<div class="trap">
+  <p class="nm">Common trap: missing values</p>
+  <p>Stata treats a missing value as larger than any number, so <code>unemplrate&gt;=8</code> also flags missing rows. Exclude them explicitly:</p>
+  <pre>gen highun = (unemplrate&gt;=8 &amp; unemplrate~=.)</pre>
+</div>
+
+<h3>Do-file skeleton</h3>
+<pre>/* Project: what this is about   */
+/* Purpose: what this file does  */
+/* Author and date               */
+
+version 15
+capture log close
+cd "/path/to/working/folder"
+log using "output.log", replace
+clear all
+set more off
+
+use "MyDataSet.dta"
+
+* data preparation and analysis here
+
+log close</pre>
+<p>Comment with <code>*</code> or wrap text in <code>/* */</code>. The goal is a do-file that reproduces the whole analysis, so someone else (or future you) can rerun it.</p>
+</section>

@@ -1,0 +1,21 @@
+<div class="viz l4" data-w="lie">
+  <p class="nm">Interactive: the Law of Iterated Expectations with real numbers</p>
+  <p class="vz-intro">Four sections of students. Each column is a section, its width is the section's share of all students, and each dot is a student. The thick line is the section average $\E[Y\mid\text{section}]$.</p>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">Size 1</span><input type="range" data-k="s1" min="3" max="40" step="1" value="10" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">Avg 1</span><input type="range" data-k="m1" min="50" max="100" step="1" value="70" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">Size 2</span><input type="range" data-k="s2" min="3" max="40" step="1" value="15" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">Avg 2</span><input type="range" data-k="m2" min="50" max="100" step="1" value="80" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">Size 3</span><input type="range" data-k="s3" min="3" max="40" step="1" value="15" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">Avg 3</span><input type="range" data-k="m3" min="50" max="100" step="1" value="90" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">Size 4</span><input type="range" data-k="s4" min="3" max="40" step="1" value="10" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">Avg 4</span><input type="range" data-k="m4" min="50" max="100" step="1" value="95" data-dp="0"><output></output></label>
+  </div>
+  <canvas class="cv tall" role="img" aria-label="Student grades by section with section means and the overall mean"></canvas>
+  <div class="ro">
+    <div><span>Students</span><b data-o="N"></b></div>
+    <div><span>Average of all grades directly, $\E[Y]$</span><b data-o="direct"></b></div>
+    <div><span>Weighted average of section averages, $\E\big[\E[Y\mid X]\big]$</span><b data-o="weighted"></b></div>
+  </div>
+  <p class="cap">Weighted average = <span data-o="calc"></span>. The two numbers always match: averaging the group averages, weighted by group size, gives the overall average. Make a section bigger and the overall dashed line is pulled toward it, exactly as much as its share says it should.</p>
+</div>

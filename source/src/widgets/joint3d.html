@@ -1,0 +1,43 @@
+<div class="viz l2" data-w="joint3d">
+  <p class="nm">Interactive 3D: the joint distribution, and what "summing out" and "conditioning" do to it</p>
+  <p class="vz-intro">Drag the surface to rotate it (on a phone, swipe sideways and use the tilt slider). Pick an operation below, then move the slice.</p>
+  <div class="seg" data-name="mode" role="group" aria-label="Operation">
+    <button type="button" data-v="joint" aria-pressed="true">Joint</button>
+    <button type="button" data-v="mX" aria-pressed="false">Sum out $Y$</button>
+    <button type="button" data-v="mY" aria-pressed="false">Sum out $X$</button>
+    <button type="button" data-v="cond" aria-pressed="false">Condition on $X$</button>
+  </div>
+  <canvas class="cv cv3" role="img" aria-label="3D surface of a bivariate normal density"></canvas>
+  <div class="row-btns">
+    <button type="button" class="btn" data-act="reset">Reset view</button>
+    <button type="button" class="btn" data-act="top">Top view</button>
+    <button type="button" class="btn" data-act="sweep" data-mode-only="mX,mY">Sweep the slice</button>
+  </div>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">$\rho$</span><input type="range" data-k="rho" min="-0.9" max="0.9" step="0.05" value="0.6" data-dp="2"><output></output></label>
+    <label class="rg"><span class="rl">Tilt</span><input type="range" data-k="el" min="6" max="82" step="1" value="39" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma_X$</span><input type="range" data-k="sx" min="0.6" max="1.4" step="0.05" value="1" data-dp="2"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma_Y$</span><input type="range" data-k="sy" min="0.6" max="1.4" step="0.05" value="1" data-dp="2"><output></output></label>
+    <label class="rg" data-slice hidden><span class="rl"><span data-lab="x">$x_0$</span><span data-lab="y" hidden>$y_0$</span></span><input type="range" data-k="u0" min="-3.7" max="3.7" step="0.05" value="0.8" data-dp="2"><output></output></label>
+  </div>
+  <label class="chk" data-cefrow><input type="checkbox" data-k="cef"><span>Draw $\E[Y\mid X=x]$ on the floor (the line through the middle of each slice)</span></label>
+  <div data-inset hidden>
+    <canvas class="cv cv2 short" role="img" aria-label="Slice of the surface, and its rescaled version"></canvas>
+  </div>
+  <p class="cap" data-cap="joint">The surface is $f_{X,Y}(x,y)$. Dashed ellipses on the floor are level sets. Raise $\rho$ and they tilt: high $x$ goes with high $y$. Height is rescaled to fit, so read numbers from the panel below.</p>
+  <p class="cap" data-cap="mX"><strong>Amber slice:</strong> fix $x=x_0$ and look along $y$. The area of that curtain is $\int f_{X,Y}(x_0,y)\,dy=f_X(x_0)$, the height of the dot on the back wall. Press Sweep and the wall traces the whole marginal $f_X$: summing out $Y$ means adding up every slice.</p>
+  <p class="cap" data-cap="mY"><strong>Amber slice:</strong> fix $y=y_0$ and look along $x$. The area of that curtain is $\int f_{X,Y}(x,y_0)\,dx=f_Y(y_0)$, the height of the dot on the side wall. Sweeping traces the marginal $f_Y$.</p>
+  <p class="cap" data-cap="cond"><strong>Amber:</strong> the slice $f_{X,Y}(x_0,y)$, whose area is only $f_X(x_0)$. <strong>Dashed black:</strong> the slice divided by $f_X(x_0)$, so its area is exactly 1. That is the conditional density $f_{Y|X}(y\mid x_0)$. <strong>Gray</strong> (lower panel): the marginal of $Y$. Set $\rho=0$ and the dashed and gray curves coincide: independence.</p>
+  <div class="ro">
+    <div><span>$\rho$</span><b data-o="rho"></b></div>
+    <div><span>$\cov[X,Y]=\rho\sigma_X\sigma_Y$</span><b data-o="cov"></b></div>
+    <div data-only="mX"><span>Area under the slice</span><b data-o="area"></b></div>
+    <div data-only="mX"><span>$f_X(x_0)$</span><b data-o="marg"></b></div>
+    <div data-only="mY"><span>Area under the slice</span><b data-o="area"></b></div>
+    <div data-only="mY"><span>$f_Y(y_0)$</span><b data-o="marg"></b></div>
+    <div data-only="cond"><span>$f_X(x_0)$ (area of amber slice)</span><b data-o="marg"></b></div>
+    <div data-only="cond"><span>$\E[Y\mid X=x_0]=\rho\frac{\sigma_Y}{\sigma_X}x_0$</span><b data-o="ecx"></b></div>
+    <div data-only="cond"><span>$\var[Y\mid X=x_0]=\sigma_Y^2(1-\rho^2)$</span><b data-o="vcx"></b></div>
+    <div data-only="cond"><span>$\E[Y]$</span><b>0.00</b></div>
+  </div>
+</div>

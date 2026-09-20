@@ -1,0 +1,23 @@
+<div class="viz l3" data-w="cov">
+  <p class="nm">Interactive: covariance as the average signed rectangle</p>
+  <p class="vz-intro">Tap or drag over the points. Each point makes a rectangle from the means to itself. Its area is that point's contribution $(x-\mu_X)(y-\mu_Y)$. Covariance averages them.</p>
+  <div class="seg" data-name="ds" role="group" aria-label="Data">
+    <button type="button" data-v="lin" aria-pressed="true">Linear (set $\rho$)</button>
+    <button type="button" data-v="par" aria-pressed="false">$Y=X^2$</button>
+    <button type="button" data-v="ind" aria-pressed="false">Independent</button>
+  </div>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">$\rho$</span><input type="range" data-k="rho" min="-0.95" max="0.95" step="0.05" value="0.7" data-dp="2"><output></output></label>
+    <label class="chk" style="margin:0"><input type="checkbox" data-k="std"><span>Standardize (z-scores)</span></label>
+  </div>
+  <div class="row-btns"><button type="button" class="btn" data-act="resample">New sample</button></div>
+  <canvas class="cv tall" role="img" aria-label="Scatter plot with quadrants around the means"></canvas>
+  <div class="ro">
+    <div><span>Selected contribution</span><b data-o="contrib"></b></div>
+    <div><span>$\cov[X,Y]$</span><b data-o="cov"></b></div>
+    <div><span>$\corr[X,Y]$</span><b data-o="corr"></b></div>
+    <div><span>$\mu_X$, $\mu_Y$</span><b><span data-o="mx"></span>, <span data-o="my"></span></b></div>
+  </div>
+  <p class="cap" data-o="cap"></p>
+  <p class="cap">Tick "Standardize" and the axes become z-scores: the covariance you read is now the correlation, which is why $\corr[X,Y]=\cov[Z_X,Z_Y]$. The numbers are sample values standing in for the population moments.</p>
+</div>

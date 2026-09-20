@@ -1,0 +1,20 @@
+<div class="viz l3" data-w="scale">
+  <p class="nm">Interactive: shifting, scaling and standardizing</p>
+  <p class="vz-intro">$X$ is normal. Build $Y=aX+b$ and compare. Horizontal bars mark $\pm1$ standard deviation around each mean.</p>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">$\mu$</span><input type="range" data-k="mu" min="-2" max="2" step="0.1" value="0.5" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma$</span><input type="range" data-k="sd" min="0.5" max="2" step="0.1" value="1" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$a$</span><input type="range" data-k="a" min="-3" max="3" step="0.1" value="2" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$b$</span><input type="range" data-k="b" min="-3" max="3" step="0.1" value="1" data-dp="1"><output></output></label>
+  </div>
+  <label class="chk"><input type="checkbox" data-k="z"><span>Also show the z-score $Z=(X-\mu)/\sigma$</span></label>
+  <canvas class="cv" role="img" aria-label="Densities of X, aX+b and the z-score"></canvas>
+  <div class="ro">
+    <div><span>$\E[X]$</span><b data-o="EX"></b></div>
+    <div><span>$\E[aX+b]=a\E[X]+b$</span><b data-o="EY"></b></div>
+    <div><span>$\var[X]$</span><b data-o="vX"></b></div>
+    <div><span>$\var[aX+b]=a^2\var[X]$</span><b data-o="vY"></b></div>
+    <div><span>$\sd[aX+b]=|a|\,\sd[X]$</span><b data-o="sY"></b></div>
+  </div>
+  <p class="cap">Changing $b$ slides the curve without changing its width. Changing $a$ stretches it, and the variance changes by $a^2$. A negative $a$ flips it but the variance is the same as for $|a|$. The z-score always has mean 0 and standard deviation 1.</p>
+</div>

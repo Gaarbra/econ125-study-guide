@@ -1,0 +1,73 @@
+<section class="lec l1" id="l1">
+<header>
+  <h2>Lecture 1: Models and causality</h2>
+  <p class="reading">Wooldridge Chapter 1, <span class="nw">pp 1-14</span></p>
+</header>
+
+<h3>What econometrics is for</h3>
+<ul>
+  <li>Testing economic theories and hypotheses</li>
+  <li>Estimating relationships between economic variables</li>
+  <li>Forecasting economic variables</li>
+  <li>Evaluating government and business policy</li>
+</ul>
+<p>The central difficulty is that most data are observational, so you need natural experiments to argue for causality. Chapter 1 also names the four data structures: cross-sectional, time series, pooled cross sections, and panel.</p>
+
+<h3>From theory to a statistical model</h3>
+<ol>
+  <li><strong>Theory.</strong> Which relationship, why you expect it, and which other variables affect it.</li>
+  <li><strong>Statistical model.</strong> Measure the variables, pick a functional form, find variation that acts like an experiment, test size and significance, and check robustness.</li>
+  <li><strong>Interpret and communicate</strong> the results.</li>
+</ol>
+
+<div class="fx">
+  <p class="nm">Wage equation (job training)</p>
+  <div class="eq">$$\begin{aligned}
+\text{wage}={}&\beta_0+\beta_1\,\text{educ}\\
+&+\beta_2\,\text{exper}+\beta_3\,\text{training}+u
+\end{aligned}$$</div>
+  <p class="nt"><strong>wage</strong> hourly wage. <strong>educ</strong> years of formal education. <strong>exper</strong> years of workforce experience. <strong>training</strong> weeks in job training. <strong>u</strong> everything unobserved that affects wage. $\beta_3$ is the wage effect of one more week of training. The question is whether it differs from zero and is large enough to justify paying for training.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Crime equation (from Becker's utility-maximization model)</p>
+  <div class="eq">$$\begin{aligned}
+\text{crime}={}&\beta_0+\beta_1\,\text{wage}+\beta_2\,\text{othinc}\\
+&+\beta_3\,\text{freqarr}+\beta_4\,\text{freqconv}\\
+&+\beta_5\,\text{avgsen}+\beta_6\,\text{age}+u
+\end{aligned}$$</div>
+  <p class="nt"><strong>crime</strong> a measure of criminal activity. <strong>wage</strong> wage from legal employment. <strong>othinc</strong> other income. <strong>freqarr</strong> frequency of prior arrests. <strong>freqconv</strong> frequency of conviction. <strong>avgsen</strong> average sentence length after conviction.</p>
+</div>
+
+<p>The term $u$ collects the unobserved factors. You cannot see it, so you have to make assumptions about it. Those assumptions become the regression assumptions later in the course.</p>
+
+<h3>Prediction vs causation</h3>
+<div class="tbl">
+<table>
+  <thead><tr><th></th><th>Prediction</th><th>Causal effect</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Question</th><td>Given $x$, what is the best guess for $y$?</td><td>If $x$ changes for person $i$ and everything else is held fixed, how does $y$ change?</td></tr>
+    <tr><th scope="row">Idea</th><td>How $\E[y\mid x]$ varies with $x$</td><td>Change $x_i$ to $x_i'$, ceteris paribus</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li><strong>Individual treatment effect:</strong> one person gets an extra year of education. How does their income change?</li>
+  <li><strong>Average treatment effect:</strong> a random person (or everyone) gets an extra year. How does average income change?</li>
+</ul>
+<p>Causal effects are identified when predictive relationships are tested with a controlled or natural experiment that enforces ceteris paribus, at least on average.</p>
+
+<h3>The experimental ideal and its three threats</h3>
+<p>Randomly assign the treatment so it is independent of everything else that affects the outcome. Fertilizer and crop yield is the clean case: randomize amounts across one-acre plots and land quality and rainfall are held fixed on average.</p>
+<div class="tbl">
+<table>
+  <thead><tr><th>Threat</th><th>What goes wrong</th><th>Slide example</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Omitted variables</th><td>Relevant factors you do not control for get misattributed to the treatment</td><td>Land quality and rainfall in the fertilizer study</td></tr>
+    <tr><th scope="row">Selection</th><td>The people you observe differ from the population</td><td>Students who seek tutoring are highly motivated; observing only public school students in one district when studying returns to education</td></tr>
+    <tr><th scope="row">Simultaneity</th><td>Treatment and outcome are determined together</td><td>Police levels and crime; supply and demand determining prices</td></tr>
+  </tbody>
+</table>
+</div>
+<!--W:select-->
+</section>

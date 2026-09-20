@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Econ 125 study guide: Lectures 1 to 4</title>
+<meta name="description" content="Econ 125 study guide for Lectures 1 to 4: distributions, moments, conditional expectation and sampling, with derivations, worked examples and interactive 3D visuals.">
+<meta name="theme-color" content="#F3F5F8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Econ 125 study guide: Lectures 1 to 4">
+<meta property="og:description" content="Distributions, moments, conditioning and sampling, with derivations and interactive 3D visuals.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --sans: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --bg: #F3F5F8; --surface: #FFFFFF; --ink: #1F262E; --muted: #596371; --rule: #D8DDE4;
+  --c1: #1B7568; --t1: #E4F1EE;
+  --c2: #2A57A3; --t2: #E6EDF8;
+  --c3: #7040A8; --t3: #EEE8F7;
+  --c4: #AD3559; --t4: #F8E7EC;
+  --cs: #4B5563; --ts: #E9ECF0;
+  --warn: #8F4E08; --warnt: #FBF0DC;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151A; --surface: #1A2027; --ink: #E7EBF0; --muted: #A0AAB6; --rule: #2C343E;
+    --c1: #55C3B0; --t1: #17302C;
+    --c2: #7EA6EA; --t2: #182640;
+    --c3: #B99AE8; --t3: #261B3B;
+    --c4: #EA83A0; --t4: #3A1B26;
+    --cs: #AEB7C2; --ts: #222932;
+    --warn: #E7A94A; --warnt: #33260F;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151A; --surface: #1A2027; --ink: #E7EBF0; --muted: #A0AAB6; --rule: #2C343E;
+  --c1: #55C3B0; --t1: #17302C;
+  --c2: #7EA6EA; --t2: #182640;
+  --c3: #B99AE8; --t3: #261B3B;
+  --c4: #EA83A0; --t4: #3A1B26;
+  --cs: #AEB7C2; --ts: #222932;
+  --warn: #E7A94A; --warnt: #33260F;
+}
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 60px); scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--serif); font-size: 17px; line-height: 1.62;
+  -webkit-text-size-adjust: 100%;
+}
+.l1 { --acc: var(--c1); --tint: var(--t1); }
+.l2 { --acc: var(--c2); --tint: var(--t2); }
+.l3 { --acc: var(--c3); --tint: var(--t3); }
+.l4 { --acc: var(--c4); --tint: var(--t4); }
+.ls { --acc: var(--cs); --tint: var(--ts); }
+
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--acc, var(--c2)); outline-offset: 2px; }
+
+/* jump bar */
+.jump {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  display: flex; gap: 6px; overflow-x: auto; padding: 8px 16px;
+  background: var(--bg); border-bottom: 1px solid var(--rule);
+}
+.jump a {
+  flex: none; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 999px;
+  background: var(--surface); color: var(--ink); text-decoration: none;
+  font: 600 14px/1.3 var(--sans);
+}
+
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 56px; }
+
+/* hero */
+.top { padding: 26px 0 4px; }
+h1 { margin: 0 0 10px; font-size: clamp(30px, 8vw, 44px); line-height: 1.1; font-weight: 700; letter-spacing: -0.01em; }
+.lede { margin: 0 0 20px; font-size: 18px; color: var(--muted); }
+.chain { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 22px; }
+@media (min-width: 640px) { .chain { grid-template-columns: repeat(4, 1fr); } }
+.tile {
+  display: block; padding: 10px 12px 12px; text-decoration: none; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--rule); border-top: 4px solid var(--acc); border-radius: 4px;
+  overflow: hidden;
+}
+.tile .k { display: block; font: 600 13px/1.2 var(--sans); color: var(--acc); }
+.tile .t { display: block; margin: 4px 0 8px; font-weight: 600; font-size: 16px; line-height: 1.25; }
+.tile .e { display: block; font-size: 16px; }
+
+/* section headers */
+.lec { margin-top: 56px; }
+.lec > header { border-top: 6px solid var(--acc); padding-top: 14px; margin-bottom: 4px; }
+h2 { margin: 0 0 4px; font-size: clamp(26px, 6.5vw, 32px); line-height: 1.15; font-weight: 700; }
+.reading { margin: 0 0 14px; font: 400 15px/1.45 var(--sans); color: var(--muted); }
+h3 { margin: 34px 0 8px; font-size: 20px; line-height: 1.3; font-weight: 600; }
+p { margin: 0 0 12px; }
+ul, ol { margin: 0 0 12px; padding-left: 22px; }
+li { margin: 0 0 4px; }
+code { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.88em; background: var(--ts); padding: 1px 5px; border-radius: 3px; }
+
+/* math */
+.nw { white-space: nowrap; }
+.m { display: inline-block; line-height: 0; max-width: 100%; text-align: left; }
+.m svg { max-width: 100%; height: auto; }
+.eq { overflow-x: auto; overflow-y: hidden; padding: 4px 0; font-size: 19px; -webkit-overflow-scrolling: touch; }
+@media (max-width: 480px) { .eq { font-size: 16px; } }
+.eq .mb { display: block; line-height: 0; }
+.eq svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+
+/* formula card */
+.fx {
+  margin: 16px 0; padding: 12px 14px; background: var(--surface);
+  border: 1px solid var(--rule); border-left: 5px solid var(--acc); border-radius: 4px;
+}
+.nm { margin: 0 0 4px; font: 600 14px/1.3 var(--sans); color: var(--acc); }
+.nt { margin: 6px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+.lab { margin: 6px 0 0; font: 400 13px/1.3 var(--sans); color: var(--muted); text-align: left; }
+.fx .nt strong { color: var(--ink); }
+
+/* derivation */
+details.dv { margin: 12px 0 18px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; }
+details.dv > summary {
+  cursor: pointer; padding: 10px 14px; font: 600 15px/1.3 var(--sans); color: var(--acc); list-style: none;
+}
+details.dv > summary::-webkit-details-marker { display: none; }
+details.dv > summary::before { content: "+"; display: inline-block; width: 1.1em; }
+details.dv[open] > summary::before { content: "\2212"; }
+.dvb { padding: 0 14px 6px; }
+ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+ol.steps > li { counter-increment: s; position: relative; padding: 0 0 8px 32px; margin: 0; }
+ol.steps > li::before {
+  content: counter(s); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--tint); color: var(--acc); font: 600 13px/22px var(--sans); text-align: center;
+}
+.why { margin: 0; font-size: 16px; line-height: 1.5; }
+
+/* example and trap */
+.ex { margin: 16px 0; padding: 12px 14px; background: var(--tint); border-radius: 4px; }
+.ex p:last-child, .trap p:last-child { margin-bottom: 0; }
+.trap { margin: 16px 0; padding: 12px 14px; background: var(--warnt); border-left: 5px solid var(--warn); border-radius: 4px; }
+.trap .nm { color: var(--warn); }
+
+/* tables */
+.tbl { overflow-x: auto; margin: 14px 0; }
+table { border-collapse: collapse; width: 100%; font: 400 15px/1.45 var(--sans); background: var(--surface); }
+th, td { border: 1px solid var(--rule); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--tint, var(--ts)); font-weight: 600; }
+.n { text-align: center; }
+.tbl .m svg { max-width: none; }
+
+/* code */
+pre {
+  margin: 14px 0; padding: 12px 14px; overflow-x: auto; background: var(--surface);
+  border: 1px solid var(--rule); border-radius: 4px;
+  font: 13.5px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* formula sheet */
+.sheet { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 8px 0 18px; }
+@media (min-width: 640px) { .sheet { grid-template-columns: 1fr 1fr; } }
+.sc { padding: 8px 10px 6px; background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--acc); border-radius: 4px; min-width: 0; }
+.sc .eq { font-size: 17px; }
+@media (max-width: 480px) { .sc .eq { font-size: 16px; } }
+.sc .nm { font-size: 13px; }
+
+.foot { margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--rule); font: 400 14px/1.55 var(--sans); color: var(--muted); }
+
+/* interactive widgets */
+[hidden] { display: none !important; }
+:root { --onacc: #FFFFFF; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --onacc: #0F1318; } }
+:root[data-theme="dark"] { --onacc: #0F1318; }
+.viz { margin: 22px 0; padding: 12px 14px 14px; background: var(--surface); border: 1px solid var(--rule); border-top: 5px solid var(--acc); border-radius: 4px; }
+.viz > .nm { font-size: 15px; margin-bottom: 2px; }
+.viz .vz-intro { margin: 2px 0 10px; font: 400 15px/1.5 var(--sans); color: var(--muted); }
+.ctl { display: grid; grid-template-columns: 1fr; gap: 4px 22px; margin: 10px 0; }
+@media (min-width: 620px) { .ctl.two { grid-template-columns: 1fr 1fr; } }
+.rg { display: grid; grid-template-columns: 3em 1fr 3.5em; align-items: center; gap: 8px; margin: 0; font: 400 14px/1.2 var(--sans); }
+.rg .rl { white-space: nowrap; }
+.rg input[type=range] { width: 100%; height: 32px; margin: 0; accent-color: var(--acc); }
+.rg output { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 8px; }
+.seg button, .btn { font: 600 14px/1.2 var(--sans); padding: 8px 12px; min-height: 38px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--acc); border-color: var(--acc); color: var(--onacc); }
+.seg button:focus-visible, .btn:focus-visible, .viz input:focus-visible, .cv:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.seg button .m svg, .btn .m svg { max-width: none; }
+.row-btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.chk { display: flex; align-items: center; gap: 8px; margin: 6px 0; font: 400 14.5px/1.3 var(--sans); }
+.chk input { width: 18px; height: 18px; accent-color: var(--acc); flex: none; }
+.cv { display: block; width: 100%; height: 260px; border-radius: 3px; background: transparent; }
+.cv3 { height: 370px; cursor: grab; }
+.cv.short { height: 190px; }
+.cv.tall { height: 390px; }
+.ro { display: grid; grid-template-columns: 1fr; gap: 0 22px; margin: 10px 0 0; font: 400 14.5px/1.35 var(--sans); }
+@media (min-width: 560px) { .ro { grid-template-columns: 1fr 1fr; } }
+.ro > div { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--rule); }
+.ro b { font-variant-numeric: tabular-nums; font-weight: 600; }
+.viz .cap { margin: 8px 0 0; font: 400 14.5px/1.5 var(--sans); color: var(--muted); }
+.viz .cap strong { color: var(--ink); }
+.viz .tbl { margin: 10px 0 0; }
+.viz table { font-size: 14px; }
+.viz td.hl, .viz th.hl { background: var(--tint); }
+.tcards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.tcard { min-width: 0; overflow: hidden; padding: 6px 10px 8px; border: 1px solid var(--rule); border-top: 4px solid var(--tc, var(--acc)); border-radius: 4px; font: 400 13.5px/1.3 var(--sans); }
+.tcard b { display: block; margin-top: 2px; font-size: 16px; font-variant-numeric: tabular-nums; }
+.dotc { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: baseline; }
+</style>
+</head>
+<body>
+<nav class="jump" aria-label="Sections">
+  <a href="#l1">Lecture 1</a>
+  <a href="#l2">Lecture 2</a>
+  <a href="#l3">Lecture 3</a>
+  <a href="#l4">Lecture 4</a>
+  <a href="#stata">Stata</a>
+  <a href="#sheet">Formula sheet</a>
+  <a href="#prep">Midterm prep</a>
+</nav>
+<main class="wrap">
+
+<header class="top">
+  <h1>Econ 125, Lectures 1 to 4</h1>
+  <p class="lede">Distributions, moments, conditioning and sampling. This is the base for Midterm I (Appendix B-C and Chapters 1-2), and regression is built directly on it.</p>
+
+  <div class="chain">
+    <a class="tile l1" href="#l1"><span class="k">Lecture 1</span><span class="t">Ask a causal question</span><span class="e">$y=\beta_0+\beta_1x+u$</span></a>
+    <a class="tile l2" href="#l2"><span class="k">Lecture 2</span><span class="t">Describe the population</span><span class="e">$f_{Y|X}(y\mid x)$</span></a>
+    <a class="tile l3" href="#l3"><span class="k">Lecture 3</span><span class="t">Summarize it</span><span class="e">$\var[X],\ \cov[X,Y]$</span></a>
+    <a class="tile l4" href="#l4"><span class="k">Lecture 4</span><span class="t">Condition, then sample</span><span class="e">$\var[\bar Y]=\sigma^2/n$</span></a>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th class="n">Lec</th><th>Topic</th><th>Reading (syllabus)</th></tr></thead>
+      <tbody>
+        <tr><td class="n">1</td><td>Causality, models, experimental ideal, Stata</td><td>Wooldridge Ch 1, <span class="nw">pp 1-14</span></td></tr>
+        <tr><td class="n">2</td><td>pdf, cdf, joint, conditional, independence</td><td>Appendix B, <span class="nw">pp 684-691 and 704-710</span></td></tr>
+        <tr><td class="n">3</td><td>Expectation, variance, covariance, correlation</td><td>Appendix B, <span class="nw">pp 691-704</span></td></tr>
+        <tr><td class="n">4</td><td>Conditional expectation, LIE, estimators, standard errors</td><td>Appendix C, <span class="nw">pp 714-726</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="nt" style="font:400 14.5px/1.5 var(--sans);color:var(--muted)">The Wooldridge text is not in the project files, so readings are mapped from the syllabus page ranges. Going by the book's layout, pp 704-710 are likely the normal, chi-square, t and F section. The slides only use the standard normal, so skim it now; it matters once you reach hypothesis testing.</p>
+  <p class="nt" style="font:400 14.5px/1.5 var(--sans);color:var(--muted)">Boxes with a colored top edge are interactive. Drag, slide and tap them.</p>
+</header>

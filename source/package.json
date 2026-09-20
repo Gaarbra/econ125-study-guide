@@ -1,0 +1,8 @@
+{
+  "name": "econ125-study-guide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build script for the Econ 125 study guide site",
+  "scripts": { "build": "node build.js" },
+  "dependencies": { "mathjax-full": "3.2.2" }
+}

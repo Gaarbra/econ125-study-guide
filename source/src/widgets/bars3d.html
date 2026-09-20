@@ -1,0 +1,47 @@
+<div class="viz l2" data-w="bars3d">
+  <p class="nm">Interactive 3D: your degree and wage table as bars</p>
+  <p class="vz-intro">Each bar is one cell of the joint table: bar height is the probability $f_{X,Y}(x,y)$. Rotate it, then choose what to do with the bars.</p>
+  <div class="seg" data-name="mode" role="group" aria-label="Operation">
+    <button type="button" data-v="joint" aria-pressed="true">Joint</button>
+    <button type="button" data-v="sumY" aria-pressed="false">Sum out $Y$</button>
+    <button type="button" data-v="sumX" aria-pressed="false">Sum out $X$</button>
+    <button type="button" data-v="cond" aria-pressed="false">Condition on $X$</button>
+  </div>
+  <div class="seg" data-name="cx" data-only="cond" hidden role="group" aria-label="Value of X">
+    <button type="button" data-v="0" aria-pressed="true">$X=0$ (no degree)</button>
+    <button type="button" data-v="1" aria-pressed="false">$X=1$ (degree)</button>
+  </div>
+  <canvas class="cv cv3" role="img" aria-label="3D bars of the joint distribution of degree and wage"></canvas>
+  <div class="row-btns"><button type="button" class="btn" data-act="reset">Reset view</button></div>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">Tilt</span><input type="range" data-k="el" min="6" max="82" step="1" value="34" data-dp="0"><output></output></label>
+    <label class="rg"><span class="rl">$\lambda$</span><input type="range" data-k="lam" min="0" max="1" step="0.05" value="0" data-dp="2"><output></output></label>
+  </div>
+  <p class="cap" style="margin-top:0">$\lambda$ slides the joint distribution from the original ($\lambda=0$) toward the independent one $f_X(x)f_Y(y)$ ($\lambda=1$). The marginals never change.</p>
+  <div class="row-btns">
+    <button type="button" class="btn" data-act="indep" data-v="1">Make independent</button>
+    <button type="button" class="btn" data-act="indep" data-v="0">Back to original</button>
+  </div>
+  <label class="chk"><input type="checkbox" data-k="ghost"><span>Show the independent version as dashed outlines ($f_X f_Y$)</span></label>
+  <p class="cap" data-cap="joint">Six bars, and they add to 1. Blue is $X=0$ (no degree), red is $X=1$ (degree).</p>
+  <p class="cap" data-cap="sumY"><strong>Sum out $Y$:</strong> stack each row's three bars into one tall bar on the back wall. That stack is the marginal $f_X(x)=\sum_y f_{X,Y}(x,y)$. Lighter shades are lower wages.</p>
+  <p class="cap" data-cap="sumX"><strong>Sum out $X$:</strong> stack the blue and red bars in each wage column on the side wall. That stack is the marginal $f_Y(y)=\sum_x f_{X,Y}(x,y)$.</p>
+  <p class="cap" data-cap="cond"><strong>Condition on $X$:</strong> keep only the chosen row (others fade). On the wall, each bar is divided by the row total $f_X(x)$, so the three wall bars add to 1: $f_{Y|X}(y\mid x)=f_{X,Y}(x,y)/f_X(x)$.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th class="n">Y=20</th><th class="n">Y=40</th><th class="n">Y=60</th><th class="n">$f_X$</th></tr></thead>
+    <tbody>
+      <tr data-row="0"><th scope="row" data-row="0">X=0</th><td class="n" data-row="0" data-o="j00"></td><td class="n" data-row="0" data-o="j01"></td><td class="n" data-row="0" data-o="j02"></td><td class="n" data-row="0" data-o="fx0"></td></tr>
+      <tr data-row="1"><th scope="row" data-row="1">X=1</th><td class="n" data-row="1" data-o="j10"></td><td class="n" data-row="1" data-o="j11"></td><td class="n" data-row="1" data-o="j12"></td><td class="n" data-row="1" data-o="fx1"></td></tr>
+      <tr><th scope="row">$f_Y$</th><td class="n" data-o="fy0"></td><td class="n" data-o="fy1"></td><td class="n" data-o="fy2"></td><td class="n">1</td></tr>
+      <tr data-only="cond" hidden><th scope="row">$f_{Y|X}$</th><td class="n" data-o="c0"></td><td class="n" data-o="c1"></td><td class="n" data-o="c2"></td><td class="n">1</td></tr>
+    </tbody>
+  </table></div>
+  <div class="ro">
+    <div><span>$\E[Y\mid X=0]$</span><b data-o="ey0"></b></div>
+    <div><span>$\E[Y\mid X=1]$</span><b data-o="ey1"></b></div>
+    <div><span>$\E[Y]$ (LIE: $.5\cdot\E[Y|0]+.5\cdot\E[Y|1]$)</span><b data-o="ey"></b></div>
+    <div><span>$\cov[X,Y]$</span><b data-o="cov"></b></div>
+    <div><span>$\corr[X,Y]$</span><b data-o="corr"></b></div>
+    <div><span>Independent?</span><b data-o="ind"></b></div>
+  </div>
+</div>

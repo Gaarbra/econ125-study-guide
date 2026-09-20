@@ -1,0 +1,173 @@
+<section class="lec l4" id="l4">
+<header>
+  <h2>Lecture 4: Conditional expectation and sampling</h2>
+  <p class="reading">Wooldridge Appendix C, <span class="nw">pp 714-726</span> (syllabus slot: Review of Statistics I)</p>
+</header>
+
+<h3>Conditional expectation</h3>
+
+<div class="fx">
+  <p class="nm">Conditional expectation function (CEF)</p>
+  <p class="lab">Discrete</p>
+  <div class="eq">$$\E[Y\mid X=x]=\sum_{y}y\,f_{Y|X}(y\mid x)$$</div>
+  <p class="lab">Continuous</p>
+  <div class="eq">$$\E[Y\mid X=x]=\int y\,f_{Y|X}(y\mid x)\,dy$$</div>
+  <p class="nt">The mean of the conditional distribution, which is still a distribution. As a function of the random variable $X$, $\E[Y\mid X]$ is itself random.</p>
+</div>
+
+<div class="ex l4">
+  <p class="nm">Slide 4: consumption given income</p>
+  <div class="eq">$$\E[\text{Consumption}\mid\text{Income}]=10+0.7\times\text{Income}$$</div>
+  <p>Expected consumption rises by 0.7 for each additional unit of income. This line is the object a regression estimates, which is where Chapter 2 goes next. Other slide examples: life expectancy given age and gender (slide 7), and predicted GPA given entrance exam scores.</p>
+</div>
+
+<!--W:joint3d_cef-->
+<div class="fx">
+  <p class="nm">Properties</p>
+  <div class="eq">$$\E[g(X)\mid X]=g(X)$$</div>
+  <div class="eq">$$\begin{gathered}\E[g(X)\,Y+h(X)\mid X]\\=g(X)\,\E[Y\mid X]+h(X)\end{gathered}$$</div>
+  <p class="nt">Anything that depends only on $X$ passes through like a constant, for example $\E[X^2\mid X]=X^2$. If $X$ and $Y$ are independent, $\E[Y\mid X]=\E[Y]$.</p>
+</div>
+
+<h3>Law of Iterated Expectations (LIE)</h3>
+
+<div class="fx">
+  <p class="nm">LIE</p>
+  <div class="eq">$$\E\big[\E[Y\mid X]\big]=\E[Y]$$</div>
+  <p class="nm" style="margin-top:8px">Tower property</p>
+  <div class="eq">$$\E\big[\E[Y\mid X,Z]\mid X\big]=\E[Y\mid X]$$</div>
+  <p class="nt">Average the group averages, weighted by group shares. Conditioning on less information means averaging away the extra conditioning variables.</p>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation (the slides show this through examples)</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Write the inner expectation with the conditional pdf.</p>
+      <div class="eq">$$\E\big[\E[Y\mid X]\big]=\sum_x\Big(\sum_y y\,f_{Y|X}(y\mid x)\Big)f_X(x)$$</div></li>
+    <li><p class="why">Use $f_{Y|X}(y\mid x)\,f_X(x)=f_{X,Y}(x,y)$.</p>
+      <div class="eq">$$=\sum_x\sum_y y\,f_{X,Y}(x,y)$$</div></li>
+    <li><p class="why">Sum out $x$ to get the marginal of $Y$.</p>
+      <div class="eq">$$=\sum_y y\,f_Y(y)=\E[Y]$$</div></li>
+  </ol></div>
+</details>
+
+<div class="ex l4">
+  <p class="nm">Examples</p>
+  <p><strong>Relay runners (slide 9).</strong> Each of four legs is equally likely for a runner.</p>
+  <div class="eq">$$\begin{aligned}\E[\text{Time}]&=50(.25)+52(.25)\\&\quad+50(.25)+48(.25)=50\end{aligned}$$</div>
+  <p><strong>Grades by section (slide 10).</strong> Sections hold 20%, 30%, 30% and 20% of students.</p>
+  <div class="eq">$$\begin{aligned}\E[\text{Grade}]&=70(.2)+80(.3)\\&\quad+90(.3)+95(.2)=84\end{aligned}$$</div>
+  <p><strong>Mortality (slide 12).</strong> Here $Y$ is a mortality outcome, such as years of life remaining, $x$ is age, and M and F are male and female.</p>
+  <div class="eq">$$\begin{aligned}
+\E[Y\mid x]&=\E[Y\mid x,\mathrm{M}]\,\Pr\{\mathrm{M}\mid x\}\\
+&\quad+\E[Y\mid x,\mathrm{F}]\,\Pr\{\mathrm{F}\mid x\}
+\end{aligned}$$</div>
+  <p><strong>Degree and wage.</strong> The conditional means are $\E[Y\mid X=0]=20(.4)+40(.4)+60(.2)=36$ and $\E[Y\mid X=1]=20(.1)+40(.4)+60(.5)=48$, so a degree adds 12 dollars an hour on average here. Then</p>
+  <div class="eq">$$\E[Y]=.5(36)+.5(48)=42,$$</div>
+  <p>which matches the direct calculation from Lecture 3.</p>
+</div>
+
+<!--W:lie-->
+<h3>Sampling and estimators</h3>
+<p>The population has fixed parameters $\theta$, such as a mean or variance. You draw a random sample and use it to learn about $\theta$.</p>
+
+<div class="fx">
+  <p class="nm">Random sample</p>
+  <div class="eq">$$Y_1,\dots,Y_n\ \overset{\text{iid}}{\sim}\ f_Y(y;\theta)$$</div>
+  <p class="nt"><strong>Independent:</strong> one draw tells you nothing about another. <strong>Identically distributed:</strong> every draw comes from the same population. Before sampling, each $Y_i$ is a random variable. After sampling, the data $y_i$ are numbers.</p>
+</div>
+
+<p>Slides 17-18 draw incomes from a lognormal population with mean 75 and standard deviation 25. Every sample gives a different histogram, and larger samples give a better one.</p>
+
+<div class="tbl"><table>
+  <thead><tr><th></th><th>Estimator</th><th>Estimate</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">What it is</th><td>A rule $W=h(Y_1,\dots,Y_n)$</td><td>The number the rule gives on your data</td></tr>
+    <tr><th scope="row">Random?</th><td>Yes, it has a sampling distribution</td><td>No</td></tr>
+    <tr><th scope="row">Sample average</th><td>$\bar Y=\frac1n\sum_{i=1}^{n}Y_i$</td><td>$\bar y=\frac1n\sum_{i=1}^{n}y_i$</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Unbiasedness</h3>
+<div class="fx">
+  <p class="nm">Unbiased estimator</p>
+  <div class="eq">$$\E[W]=\theta$$</div>
+  <p class="lab">Equivalently, the bias is zero</p>
+  <div class="eq">$$\Bias(W;\theta)=\E[W]-\theta=0$$</div>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation: the sample average is unbiased</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Start from the definition of the estimator.</p>
+      <div class="eq">$$\E[\bar Y]=\E\Big[\frac1n\sum_{i=1}^{n}Y_i\Big]$$</div></li>
+    <li><p class="why">Apply linearity.</p>
+      <div class="eq">$$=\frac1n\sum_{i=1}^{n}\E[Y_i]$$</div></li>
+    <li><p class="why">Every draw has mean $\mu$.</p>
+      <div class="eq">$$=\frac1n(n\mu)=\mu\quad\Rightarrow\quad\Bias(\bar Y;\mu)=0$$</div></li>
+  </ol></div>
+</details>
+<p>This holds for any value of $\mu$, so you know $\bar Y$ is unbiased even though you do not know $\mu$. Only linearity is used, not independence. On slide 25, 100 sample averages at $n=10$ average 75.26 against a true value of 75.</p>
+
+<h3>Sampling variance and standard error</h3>
+<div class="fx">
+  <p class="nm">Definitions</p>
+  <div class="eq">$$\var[W]=\E\big[(W-\E[W])^2\big]$$</div>
+  <div class="eq">$$\se[W]=\sqrt{\var[W]}$$</div>
+  <p class="nt">Here $W=h(Y_1,\dots,Y_n)$, so this is the variance of its sampling distribution. If $W$ is unbiased, $\E[W]=\theta$ and $\var[W]=\E[(W-\theta)^2]$.</p>
+</div>
+
+<div class="fx">
+  <p class="nm">Sample average</p>
+  <div class="eq">$$\var[\bar Y]=\frac{\sigma^2}{n}$$</div>
+  <div class="eq">$$\se[\bar Y]=\frac{\sigma}{\sqrt n}$$</div>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Start from the definition.</p>
+      <div class="eq">$$\var[\bar Y]=\var\Big[\frac1n\sum_{i=1}^{n}Y_i\Big]$$</div></li>
+    <li><p class="why">Pull out the constant, using $\var[aX]=a^2\var[X]$.</p>
+      <div class="eq">$$=\frac{1}{n^2}\,\var\Big[\sum_{i=1}^{n}Y_i\Big]$$</div></li>
+    <li><p class="why">Independent draws have zero cross-covariances, so variances add.</p>
+      <div class="eq">$$=\frac{1}{n^2}\sum_{i=1}^{n}\var[Y_i]$$</div></li>
+    <li><p class="why">Every draw has variance $\sigma^2$.</p>
+      <div class="eq">$$=\frac{1}{n^2}\,(n\sigma^2)=\frac{\sigma^2}{n}$$</div></li>
+  </ol></div>
+</details>
+
+<p>The variance shrinks to zero as $n$ grows, which is why the sample average tightens around $\mu$. Halving the standard error takes four times the data. With the slides' population ($\sigma=25$):</p>
+<div class="tbl"><table>
+  <thead><tr><th class="n">n</th><th class="n">10</th><th class="n">100</th><th class="n">1,000</th><th class="n">10,000</th></tr></thead>
+  <tbody><tr><th scope="row" class="n">$\sigma/\sqrt n$</th><td class="n">7.91</td><td class="n">2.50</td><td class="n">0.79</td><td class="n">0.25</td></tr></tbody>
+</table></div>
+<p>On slide 31, the 100 sample averages at $n=10$ have a standard deviation of 8.24 against a theoretical 7.91.</p>
+
+<div class="trap">
+  <p class="nm">Bias and variance are separate ideas</p>
+  <p>Unbiasedness is about the center of the sampling distribution. The standard error is about its spread. Using only $Y_1$ is also unbiased for $\mu$, but its variance is $\sigma^2$ no matter how large $n$ gets.</p>
+</div>
+
+<!--W:sampling-->
+<h3>Sample variance and standard deviation</h3>
+<div class="fx">
+  <p class="nm">Sample variance</p>
+  <div class="eq">$$S^2=\frac{1}{n-1}\sum_{i=1}^{n}(Y_i-\bar Y)^2$$</div>
+  <div class="eq">$$S=\sqrt{S^2}$$</div>
+  <p class="nt">$S^2$ is unbiased for $\sigma^2$. $S$ is not unbiased for $\sigma$, since the square root bends the average. The slides call the $n-1$ a degrees-of-freedom correction: estimating $\mu$ with $\bar Y$ uses up one parameter.</p>
+</div>
+
+<details class="dv" open>
+  <summary>Derivation (added by me; the slides state the result)</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Write $Y_i-\bar Y=(Y_i-\mu)-(\bar Y-\mu)$, expand, and use $\sum(Y_i-\mu)=n(\bar Y-\mu)$.</p>
+      <div class="eq">$$\sum_{i=1}^{n}(Y_i-\bar Y)^2=\sum_{i=1}^{n}(Y_i-\mu)^2-n(\bar Y-\mu)^2$$</div></li>
+    <li><p class="why">Take expectations. Each $\E[(Y_i-\mu)^2]=\sigma^2$, and $\E[(\bar Y-\mu)^2]=\var[\bar Y]=\sigma^2/n$.</p>
+      <div class="eq">$$\begin{aligned}\E\Big[\sum_{i=1}^{n}(Y_i-\bar Y)^2\Big]&=n\sigma^2-n\cdot\frac{\sigma^2}{n}\\&=(n-1)\,\sigma^2\end{aligned}$$</div></li>
+    <li><p class="why">Divide by $n-1$.</p>
+      <div class="eq">$$\E[S^2]=\sigma^2$$</div></li>
+  </ol></div>
+</details>
+<p>Dividing by $n$ instead would give $\frac{n-1}{n}\sigma^2$, which is 10% too small at $n=10$. In practice $\sigma$ is unknown, so the estimated standard error is $S/\sqrt n$. The slides stop before that step, but slide 28 shows $S$ settling near 25 as $n$ grows.</p>
+</section>

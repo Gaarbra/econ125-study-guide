@@ -5,6 +5,23 @@
 </header>
 <p>Lecture 4 tells us how estimates vary across samples. Lecture 5 uses that sampling distribution to quantify uncertainty and test claims about the population.</p>
 
+<div class="formula-help" aria-label="Formula symbol guide">
+  <p class="nm">How to read the formulas</p>
+  <p>Hover over a symbol, or focus it with Tab, to see its meaning. Lowercase letters are observed sample values; uppercase letters usually represent random variables before the sample is drawn.</p>
+  <div class="terms">
+    <button class="term" type="button" data-tip="A single outcome or observation from the population.">Yᵢ</button>
+    <button class="term" type="button" data-tip="The number of observations in the sample.">n</button>
+    <button class="term" type="button" data-tip="The population mean: the long-run average of Y.">μ</button>
+    <button class="term" type="button" data-tip="The population standard deviation: typical distance from the population mean.">σ</button>
+    <button class="term" type="button" data-tip="The sample mean: add the observations and divide by n.">Ȳ or ȳ</button>
+    <button class="term" type="button" data-tip="The sample standard deviation: an estimate of sigma based on the observed data.">S or s</button>
+    <button class="term" type="button" data-tip="A population value specified by the null hypothesis, such as 70.">μ₀</button>
+    <button class="term" type="button" data-tip="The standard normal cumulative distribution function: the area to the left of z.">Φ(z)</button>
+    <button class="term" type="button" data-tip="The chosen probability of a Type I error, often 0.05.">α</button>
+    <button class="term" type="button" data-tip="A probability limit: what an estimator gets arbitrarily close to as n grows.">plim</button>
+  </div>
+</div>
+
 <h3>Keep the three spreads separate</h3>
 <div class="tbl"><table>
   <thead><tr><th>Quantity</th><th>Formula</th><th>What varies?</th></tr></thead>
@@ -15,6 +32,10 @@
   </tbody>
 </table></div>
 <p>For iid sampling, $\E[\bar Y]=\mu$ and $\var[\bar Y]=\sigma^2/n$ (slides 3-8). More data makes the mean more precise; it does not make individuals more alike. Revisit the <a href="#l4">Lecture 4 sampling simulation</a> to see this distinction.</p>
+<div class="ex l5">
+  <p class="nm">When is this useful?</p>
+  <p>Use $S$ to describe how spread out your observed data are. Use $S/\sqrt n$ when your question is about the uncertainty in the <em>sample mean</em>, such as estimating average wages from a survey.</p>
+</div>
 
 <h3>Consistency and the Law of Large Numbers</h3>
 <div class="fx">
@@ -49,6 +70,10 @@
   <p class="nt">Assume $0<\sigma^2<\infty$. LLN says the mean concentrates around $\mu$. CLT describes the approximately normal shape of its standardized error. It does not say the individual observations become normal.</p>
 </div>
 <p>The lognormal income example has mean 75 and standard deviation 25. At $n=100$, the mean's standard error is 2.5; at $n=400$, it is 1.25. Quadrupling sample size halves the standard error. Slides 15 and 20 show both concentration and reduced skewness.</p>
+<div class="ex l5">
+  <p class="nm">When is the CLT useful?</p>
+  <p>Use it when the population is not normal or its exact sampling distribution is hard to derive, but the sample is large enough for an approximation. It lets you use normal critical values to build intervals and tests for averages.</p>
+</div>
 <p>For $Z\sim N(0,1)$, write $\Phi(z)=\Pr\{Z\le z\}$. The upper-tail probability is $1-\Phi(z)$ (slide 21). Normal approximations can be poor in small, skewed samples (slide 10).</p>
 
 <h3>Confidence intervals</h3>
@@ -91,6 +116,14 @@
   </tbody>
 </table></div>
 <p>Critical values above are rounded. The p-value is the probability, <strong>assuming the null is true</strong>, of a statistic at least as extreme in the direction(s) of the chosen alternative. Reject if $p\le\alpha$; otherwise <strong>fail to reject</strong>. A p-value is not the probability that the null is true, nor the probability your specific decision is mistaken.</p>
+<div class="formula-help" aria-label="Choosing a hypothesis test">
+  <p class="nm">Which formula should I use?</p>
+  <div class="terms">
+    <button class="term" type="button" data-tip="Use when your research question predicts the mean is larger than the null value.">H₁: μ &gt; μ₀</button>
+    <button class="term" type="button" data-tip="Use when your research question predicts the mean is smaller than the null value.">H₁: μ &lt; μ₀</button>
+    <button class="term" type="button" data-tip="Use when any difference matters, whether above or below the null value.">H₁: μ ≠ μ₀</button>
+  </div>
+</div>
 <div class="ex l5">
   <p class="nm">Worked example continued: test a mean of 70</p>
   <div class="eq">$$t=\frac{75-70}{2.5}=2$$</div>

@@ -124,6 +124,14 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-si
 }
 .nm { margin: 0 0 4px; font: 600 14px/1.3 var(--sans); color: var(--acc); }
 .nt { margin: 6px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+.formula-help { margin: 10px 0 18px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--rule); border-left: 5px solid var(--acc); border-radius: 4px; }
+.formula-help p { margin-bottom: 8px; }
+.terms { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; min-width: 0; }
+.term { position: relative; display: inline-flex; align-items: center; gap: 4px; max-width: 100%; white-space: normal; text-align: left; border: 1px solid var(--rule); border-radius: 999px; padding: 5px 9px; background: var(--tint); color: var(--ink); font: 600 14px/1.2 var(--sans); cursor: help; }
+.term:hover, .term:focus-visible { border-color: var(--acc); }
+.term::after { content: attr(data-tip); position: absolute; z-index: 3; left: auto; right: 0; bottom: calc(100% + 8px); width: min(270px, 78vw); padding: 8px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); color: var(--ink); box-shadow: 0 3px 12px rgba(0,0,0,.14); font: 400 13px/1.35 var(--sans); text-align: left; pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity .12s ease, transform .12s ease; }
+.term:hover::after, .term:focus-visible::after { opacity: 1; transform: translateY(0); }
+.term:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .lab { margin: 6px 0 0; font: 400 13px/1.3 var(--sans); color: var(--muted); text-align: left; }
 .fx .nt strong { color: var(--ink); }
 

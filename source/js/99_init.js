@@ -1,53 +1,41 @@
-const WMAP = { select: wSelect, pdf: wPdf, joint3d: wJoint, bars3d: wBars, cov: wCov, varsum: wVarsum, scale: wScale, lie: wLie, sampling: wSampling };
+const WMAP = { select: wSelect, pdf: wPdf, joint3d: wJoint, bars3d: wBars, cov: wCov, varsum: wVarsum, scale: wScale, lie: wLie, sampling: wSampling, inference: wInference };
 $$('.viz[data-w]').forEach(el => { try { WMAP[el.dataset.w](el); } catch (err) { console.error('widget ' + el.dataset.w, err); } });
 
-const formulaTerms = [
-  ['\\bar Y|\\bar y', 'sample mean: the average calculated from the observations'],
-  ['Y_i|Y', 'an outcome or observation'], ['X', 'an explanatory or conditioning variable'],
-  ['n', 'sample size: how many observations are included'],
-  ['\\mu|mu', 'population mean: the long-run average'],
-  ['\\sigma|sigma', 'population standard deviation: typical distance from the mean'],
-  ['S|s', 'sample standard deviation: an estimate of population spread'],
-  ['\\theta|theta', 'the population quantity the estimator is targeting'],
-  ['\\alpha|alpha', 'significance level: the chosen Type I error rate'],
-  ['\\Phi|Phi', 'standard normal CDF: the area to the left of z'],
-  ['t', 'a standardized distance from a null value'],
-  ['\\E|E', 'expected value: a probability-weighted average'],
-  ['\\var|var', 'variance: expected squared distance from a mean'],
-  ['\\cov|cov', 'covariance: whether two variables move together']
-];
-const formulaRule = src => {
-  if (/xrightarrow\{p\}|plim/.test(src)) return 'This is a probability-limit statement: as the sample grows, the estimator gets arbitrarily close to its target. The Law of Large Numbers supplies this result for a sample average.';
-  if (/xrightarrow\{d\}|N\(0,1\)/.test(src)) return 'This is an approximation about a sampling distribution. The Central Limit Theorem says a standardized sample average becomes approximately normal in large samples.';
-  if (/1\.96|0\.95/.test(src)) return 'This rearranges a central 95% normal probability statement to place a plausible range around the unknown population value.';
-  if (/t=|p_\{|p\\/.test(src)) return 'This compares the estimate with a null value in standard-error units. A larger absolute distance is harder to explain if the null is true.';
-  if (/sum|int/.test(src)) return 'This is a weighted average or accumulated area: each possible value is weighted by how likely it is.';
-  if (/var|sd|sigma/.test(src)) return 'This measures spread. Squaring makes positive and negative deviations contribute equally; the square root returns to the original units.';
-  if (/cov|corr|rho/.test(src)) return 'This summarizes how two variables move together, then scales the result when a unit-free comparison is needed.';
-  if (/mid|conditional|\|/.test(src)) return 'The vertical bar means “given.” The formula restricts attention to a subgroup or information set before averaging.';
-  return 'Read the left side as the quantity being described and the right side as the rule for calculating it. Each equals sign preserves the same quantity while making one step more explicit.';
+const cleanFormula = s => s.replace(/\\begin\{[^}]+\}|\\end\{[^}]+\}|\\left|\\right|\\big|\\quad|\\qquad|\\!/g, ' ').replace(/\\[a-zA-Z]+/g, m => ({'\\mu':'μ','\\sigma':'σ','\\theta':'θ','\\rho':'ρ','\\Phi':'Φ','\\E':'E','\\Pr':'Pr','\\var':'var','\\cov':'cov','\\corr':'corr','\\sqrt':'√','\\sum':'Σ','\\int':'∫','\\pm':'±','\\ne':'≠','\\le':'≤','\\ge':'≥','\\to':'→'}[m] || m.slice(1))).replace(/[{}]/g, '').replace(/\\/g, ' ').replace(/\s+/g, ' ').trim();
+const formulaOrigin = (src, lecture) => {
+  if (lecture === 'l1') return 'This comes from separating the systematic part of an economic model from the unobserved factors collected in the error term.';
+  if (/f_\{Y\|X\}|mid/.test(src)) return 'This comes from the definition of conditional probability: joint probability divided by the probability of the condition.';
+  if (/1-F|F\(.+\)-F/.test(src)) return 'This comes from subtracting accumulated probability: use the complement for an upper tail or subtract two CDF values for an interval.';
+  if (/E\[|\\E/.test(src) && /sum|int/.test(src)) return 'This comes from the definition of expectation: multiply every possible outcome by its probability, then add or integrate.';
+  if (/var/.test(src)) return 'This comes from measuring squared distance from the mean. Expanding the square and using linearity gives the shortcut form.';
+  if (/cov|corr/.test(src)) return 'This comes from multiplying the two variables’ deviations from their means. Correlation divides by both standard deviations to remove units.';
+  if (/E\[.*mid|\\E.*mid/.test(src)) return 'This comes from taking an average after restricting attention to observations with the stated information.';
+  if (/xrightarrow\{p\}|plim/.test(src)) return 'This comes from the Law of Large Numbers: independent sample information accumulates, so a sample average concentrates on its population mean.';
+  if (/xrightarrow\{d\}|N\(0,1\)/.test(src)) return 'This comes from the Central Limit Theorem after subtracting the true mean and dividing by the standard error.';
+  if (/1\.96|0\.95/.test(src)) return 'This comes from the middle 95% of the standard normal curve, whose endpoints are approximately −1.96 and 1.96.';
+  if (/t=|mu_0/.test(src)) return 'This comes from standardizing the gap between an estimate and the null value by the estimate’s standard error.';
+  if (lecture === 'l4') return 'This follows from the definitions of an estimator, expectation, and sampling variance applied across repeated samples.';
+  return 'This follows from the definition immediately above it and ordinary algebra that preserves equality.';
 };
-const formulaPractice = src => {
-  if (/xrightarrow\{p\}|plim/.test(src)) return 'Imagine sample means of wages with true mean 20. Explain what should happen to the chance that |ȳ − 20| > 1 as n grows.';
-  if (/xrightarrow\{d\}|N\(0,1\)/.test(src)) return 'If μ = 75, σ = 25, and n = 100, compute the standard error before using the normal approximation.';
-  if (/1\.96|0\.95/.test(src)) return 'With ȳ = 75, s = 25, and n = 100, substitute into ȳ ± 1.96s/√n and interpret the interval.';
-  if (/t=|p_\{|p\\/.test(src)) return 'With ȳ = 75, μ₀ = 70, s = 25, and n = 100, calculate t and decide what a two-sided test suggests at 5%.';
-  if (/var|sd|sigma/.test(src)) return 'Choose three observed values, compute their mean, then compare the average squared distance with the variance formula.';
-  return 'Choose small, realistic values for each symbol, substitute them one at a time, and state what the resulting number means in the original units.';
-};
+function formulaParts(src) {
+  const chunks = cleanFormula(src).split('=').map(s => s.trim()).filter(Boolean);
+  if (chunks.length === 1) return [{ kind: 'target', text: chunks[0], label: 'complete statement' }];
+  const out = [{ kind: 'target', text: chunks[0], label: 'target: what we want to describe' }];
+  chunks.slice(1).forEach((text, i) => { out.push({ kind: 'relation', text: '=', label: 'equality: both sides are the same quantity' }); out.push({ kind: i ? 'step' : 'recipe', text, label: i ? 'equivalent step: the same rule simplified' : 'recipe: inputs and operations used to calculate the target' }); });
+  return out;
+}
 function installFormulaExplorer() {
   $$('.lec:not(.ls) .eq').forEach((eq, index) => {
     if (eq.dataset.explorerReady) return;
     eq.dataset.explorerReady = '1'; eq.tabIndex = 0; eq.setAttribute('role', 'button'); eq.setAttribute('aria-expanded', 'false');
     const panel = document.createElement('div'); panel.className = 'formula-breakdown'; panel.hidden = true; panel.id = 'formula-breakdown-' + index;
     const math = eq.querySelector('[aria-label]'); const src = math ? math.getAttribute('aria-label') : eq.textContent;
-    const terms = formulaTerms.filter(([pattern]) => new RegExp(pattern).test(src));
+    const lecture = eq.closest('.lec').id, parts = formulaParts(src);
     panel.innerHTML = '<p class="fb-title">Formula explorer</p>'
-      + '<p><strong>Step 1 — identify the target:</strong> the expression on the left is the quantity you want to describe or estimate.</p>'
-      + '<p><strong>Step 2 — read the operation:</strong> the symbols on the right tell you which observations, weights, deviations, or probabilities are combined.</p>'
-      + '<p><strong>Step 3 — ask why:</strong> ' + formulaRule(src) + '</p>'
-      + (terms.length ? '<p><strong>Symbols in this formula:</strong></p><ul>' + terms.map(([_, text]) => '<li>' + text + '</li>').join('') + '</ul>' : '')
-      + '<p><strong>Try it:</strong> ' + formulaPractice(src) + '</p>';
+      + '<p>The colors separate the formula by job. Read the pieces from left to right.</p>'
+      + '<div class="formula-anatomy" aria-label="Color-coded formula parts">' + parts.map(p => '<span class="formula-part" data-kind="' + p.kind + '">' + p.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span>').join('') + '</div>'
+      + '<ol class="anatomy-list">' + parts.map(p => '<li><strong>' + p.label.split(':')[0] + ':</strong> ' + (p.label.split(':')[1] || p.label) + '</li>').join('') + '</ol>'
+      + '<p class="fb-origin"><strong>Where it comes from:</strong> ' + formulaOrigin(src, lecture) + '</p>';
     eq.insertAdjacentElement('afterend', panel);
     const toggle = () => { const open = !panel.hidden; panel.hidden = open; eq.setAttribute('aria-expanded', String(!open)); };
     eq.addEventListener('click', toggle);

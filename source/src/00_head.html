@@ -124,6 +124,20 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-si
 .formula-breakdown ul { margin: 4px 0 7px; padding-left: 20px; }
 .formula-breakdown li { margin-bottom: 3px; }
 .formula-breakdown code { font-size: .9em; }
+.formula-anatomy { display: flex; flex-wrap: wrap; align-items: stretch; gap: 4px; margin: 9px 0 12px; font: 600 15px/1.35 ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+.formula-part { display: inline-flex; align-items: center; min-width: 0; max-width: 100%; padding: 7px 9px; border: 1px solid var(--rule); border-radius: 3px; overflow-wrap: anywhere; }
+.formula-part[data-kind="target"] { background: var(--t2); color: var(--c2); }
+.formula-part[data-kind="relation"] { background: var(--ts); color: var(--cs); }
+.formula-part[data-kind="recipe"] { background: var(--warnt); color: var(--warn); }
+.formula-part[data-kind="step"] { background: var(--t4); color: var(--c4); }
+.anatomy-list { list-style: none; padding: 0 !important; counter-reset: anatomy; }
+.anatomy-list li { position: relative; padding: 0 0 8px 27px; }
+.anatomy-list li::before { content: ""; position: absolute; left: 2px; top: 4px; width: 13px; height: 13px; border-radius: 2px; background: var(--part-color); }
+.anatomy-list li:nth-child(1) { --part-color: var(--c2); }
+.anatomy-list li:nth-child(2) { --part-color: var(--cs); }
+.anatomy-list li:nth-child(3) { --part-color: var(--warn); }
+.anatomy-list li:nth-child(n+4) { --part-color: var(--c4); }
+.fb-origin { padding: 8px 10px; background: var(--tint); border-radius: 3px; }
 @media (max-width: 480px) { .eq { font-size: 16px; } }
 .eq .mb { display: block; line-height: 0; }
 .eq svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }

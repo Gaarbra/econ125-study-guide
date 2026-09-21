@@ -1,0 +1,23 @@
+<div class="viz l5" data-w="inference">
+  <p class="nm">Interactive: from sampling to inference</p>
+  <p class="vz-intro">Change the sample size and the observed mean. The graph connects the LLN, CLT, confidence interval, and hypothesis test using the same numbers.</p>
+  <div class="seg" data-name="view" role="group" aria-label="Inference concept">
+    <button type="button" data-v="clt" aria-pressed="true">LLN + CLT</button>
+    <button type="button" data-v="ci" aria-pressed="false">95% interval</button>
+    <button type="button" data-v="test" aria-pressed="false">Hypothesis test</button>
+  </div>
+  <div class="ctl two">
+    <label class="rg"><span class="rl">$n$</span><input type="range" data-k="n" min="10" max="500" step="10" value="100"><output></output></label>
+    <label class="rg"><span class="rl">$\sigma$</span><input type="range" data-k="sd" min="10" max="40" step="1" value="25"><output></output></label>
+    <label class="rg"><span class="rl">$\bar y$</span><input type="range" data-k="yb" min="60" max="90" step="0.5" value="80" data-dp="1"><output></output></label>
+    <label class="rg"><span class="rl">$\mu_0$</span><input type="range" data-k="mu0" min="60" max="90" step="0.5" value="75" data-dp="1"><output></output></label>
+  </div>
+  <canvas class="cv" role="img" aria-label="Interactive sampling distribution, confidence interval, and hypothesis test graph"></canvas>
+  <div class="ro">
+    <div><span>Standard error $\sigma/\sqrt n$</span><b data-o="se"></b></div>
+    <div><span>95% interval</span><b data-o="ci"></b></div>
+    <div><span>Test statistic</span><b data-o="z"></b></div>
+    <div><span>Two-sided p-value</span><b data-o="p"></b></div>
+  </div>
+  <p class="cap" data-o="cap"></p>
+</div>

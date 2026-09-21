@@ -154,4 +154,13 @@
     <li><strong>Does a two-sided 95% interval containing the null imply rejection at 5%?</strong> No, for the matching test it implies failure to reject when the null is strictly inside the interval.</li>
   </ol></div>
 </details>
+<details class="dv" open>
+  <summary>Practice set: use the formulas from Lecture 5</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why"><strong>LLN.</strong> A population mean is 20. Explain what $\bar Y\xrightarrow{p}\mu$ predicts as a survey grows from 25 to 2,500 people.</p><p>Answer: the sample mean should become increasingly close to 20; the probability of a meaningful gap from 20 approaches zero.</p></li>
+    <li><p class="why"><strong>CLT.</strong> A population has $\mu=75$, $\sigma=25$, and $n=100$. Find the standard error and the standardized value for $\bar y=80$.</p><div class="eq">$$\widehat{\se}=\frac{25}{\sqrt{100}}=2.5,\qquad z=\frac{80-75}{2.5}=2$$</div><p>Answer: the observed mean is two estimated standard errors above the population mean.</p></li>
+    <li><p class="why"><strong>Confidence interval.</strong> Using the same sample information, construct an approximate 95% interval for $\mu$.</p><div class="eq">$$80\pm1.96(2.5)=[75.10,84.90]$$</div><p>Answer: the repeated-sampling procedure is designed to cover the fixed population mean about 95% of the time.</p></li>
+    <li><p class="why"><strong>Hypothesis test.</strong> Test $H_0:\mu=75$ against $H_1:\mu\ne75$ using $\bar y=80$, $s=25$, and $n=100$.</p><div class="eq">$$t=\frac{80-75}{25/\sqrt{100}}=2$$</div><p>Answer: the two-sided normal-approximation p-value is about 0.0455, so reject at 5% and report the p-value rather than saying the null is “proven false.”</p></li>
+  </ol></div>
+</details>
 </section>

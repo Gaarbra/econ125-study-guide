@@ -113,6 +113,17 @@ code { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-si
 .m { display: inline-block; line-height: 0; max-width: 100%; text-align: left; }
 .m svg { max-width: 100%; height: auto; }
 .eq { overflow-x: auto; overflow-y: hidden; padding: 4px 0; font-size: 19px; -webkit-overflow-scrolling: touch; }
+.eq.formula-clickable { position: relative; cursor: pointer; border-radius: 3px; }
+.eq.formula-clickable:hover, .eq.formula-clickable:focus-visible { background: var(--tint); outline: 2px solid var(--acc); outline-offset: 2px; }
+.eq.formula-clickable::after { content: "click for steps"; position: absolute; right: 2px; top: 2px; padding: 2px 6px; border-radius: 999px; background: var(--tint); color: var(--acc); font: 600 11px/1.2 var(--sans); opacity: 0; transition: opacity .12s ease; }
+.eq.formula-clickable:hover::after, .eq.formula-clickable:focus-visible::after { opacity: 1; }
+.formula-breakdown { margin: 2px 0 12px; padding: 10px 12px 11px; border: 1px solid var(--rule); border-left: 4px solid var(--acc); border-radius: 4px; background: var(--surface); font: 400 14.5px/1.45 var(--sans); }
+.formula-breakdown[hidden] { display: none; }
+.formula-breakdown .fb-title { margin: 0 0 5px; color: var(--acc); font-weight: 600; }
+.formula-breakdown p { margin: 0 0 7px; }
+.formula-breakdown ul { margin: 4px 0 7px; padding-left: 20px; }
+.formula-breakdown li { margin-bottom: 3px; }
+.formula-breakdown code { font-size: .9em; }
 @media (max-width: 480px) { .eq { font-size: 16px; } }
 .eq .mb { display: block; line-height: 0; }
 .eq svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }

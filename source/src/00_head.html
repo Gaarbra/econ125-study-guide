@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Econ 125 study guide: Lectures 1 to 4</title>
-<meta name="description" content="Econ 125 study guide for Lectures 1 to 4: distributions, moments, conditional expectation and sampling, with derivations, worked examples and interactive 3D visuals.">
+<title>Econ 125 study guide: Lectures 1 to 5</title>
+<meta name="description" content="Econ 125 study guide for Lectures 1 to 5: distributions, moments, conditional expectation, sampling, inference and hypothesis testing, with derivations, worked examples and interactive 3D visuals.">
 <meta name="theme-color" content="#F3F5F8">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Econ 125 study guide: Lectures 1 to 4">
-<meta property="og:description" content="Distributions, moments, conditioning and sampling, with derivations and interactive 3D visuals.">
+<meta property="og:title" content="Econ 125 study guide: Lectures 1 to 5">
+<meta property="og:description" content="Distributions, moments, conditioning, sampling and inference, with derivations and interactive 3D visuals.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,7 @@
   --c2: #2A57A3; --t2: #E6EDF8;
   --c3: #7040A8; --t3: #EEE8F7;
   --c4: #AD3559; --t4: #F8E7EC;
+  --c5: #8F4E08; --t5: #FBF0DC;
   --cs: #4B5563; --ts: #E9ECF0;
   --warn: #8F4E08; --warnt: #FBF0DC;
 }
@@ -35,6 +36,7 @@
     --c2: #7EA6EA; --t2: #182640;
     --c3: #B99AE8; --t3: #261B3B;
     --c4: #EA83A0; --t4: #3A1B26;
+  --c5: #E7A94A; --t5: #33260F;
     --cs: #AEB7C2; --ts: #222932;
     --warn: #E7A94A; --warnt: #33260F;
   }
@@ -45,6 +47,7 @@
   --c2: #7EA6EA; --t2: #182640;
   --c3: #B99AE8; --t3: #261B3B;
   --c4: #EA83A0; --t4: #3A1B26;
+  --c5: #E7A94A; --t5: #33260F;
   --cs: #AEB7C2; --ts: #222932;
   --warn: #E7A94A; --warnt: #33260F;
 }
@@ -60,6 +63,7 @@ body {
 .l2 { --acc: var(--c2); --tint: var(--t2); }
 .l3 { --acc: var(--c3); --tint: var(--t3); }
 .l4 { --acc: var(--c4); --tint: var(--t4); }
+.l5 { --acc: var(--c5); --tint: var(--t5); }
 .ls { --acc: var(--cs); --tint: var(--ts); }
 
 a:focus-visible, summary:focus-visible { outline: 2px solid var(--acc, var(--c2)); outline-offset: 2px; }
@@ -83,7 +87,7 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--acc, var(--c2)
 h1 { margin: 0 0 10px; font-size: clamp(30px, 8vw, 44px); line-height: 1.1; font-weight: 700; letter-spacing: -0.01em; }
 .lede { margin: 0 0 20px; font-size: 18px; color: var(--muted); }
 .chain { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 22px; }
-@media (min-width: 640px) { .chain { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 640px) { .chain { grid-template-columns: repeat(5, 1fr); } }
 .tile {
   display: block; padding: 10px 12px 12px; text-decoration: none; color: var(--ink);
   background: var(--surface); border: 1px solid var(--rule); border-top: 4px solid var(--acc); border-radius: 4px;
@@ -218,6 +222,7 @@ pre {
   <a href="#l2">Lecture 2</a>
   <a href="#l3">Lecture 3</a>
   <a href="#l4">Lecture 4</a>
+  <a href="#l5">Lecture 5</a>
   <a href="#stata">Stata</a>
   <a href="#sheet">Formula sheet</a>
   <a href="#prep">Midterm prep</a>
@@ -225,14 +230,15 @@ pre {
 <main class="wrap">
 
 <header class="top">
-  <h1>Econ 125, Lectures 1 to 4</h1>
-  <p class="lede">Distributions, moments, conditioning and sampling. This is the base for Midterm I (Appendix B-C and Chapters 1-2), and regression is built directly on it.</p>
+  <h1>Econ 125, Lectures 1 to 5</h1>
+  <p class="lede">Distributions, moments, conditioning, sampling and inference. This is the base for Midterm I (Appendix B-C and Chapters 1-2), and regression is built directly on it.</p>
 
   <div class="chain">
     <a class="tile l1" href="#l1"><span class="k">Lecture 1</span><span class="t">Ask a causal question</span><span class="e">$y=\beta_0+\beta_1x+u$</span></a>
     <a class="tile l2" href="#l2"><span class="k">Lecture 2</span><span class="t">Describe the population</span><span class="e">$f_{Y|X}(y\mid x)$</span></a>
     <a class="tile l3" href="#l3"><span class="k">Lecture 3</span><span class="t">Summarize it</span><span class="e">$\var[X],\ \cov[X,Y]$</span></a>
     <a class="tile l4" href="#l4"><span class="k">Lecture 4</span><span class="t">Condition, then sample</span><span class="e">$\var[\bar Y]=\sigma^2/n$</span></a>
+    <a class="tile l5" href="#l5"><span class="k">Lecture 5</span><span class="t">Infer and test</span><span class="e">$t=(\bar y-\mu_0)/\se$</span></a>
   </div>
 
   <div class="tbl">
@@ -243,9 +249,10 @@ pre {
         <tr><td class="n">2</td><td>pdf, cdf, joint, conditional, independence</td><td>Appendix B, <span class="nw">pp 684-691 and 704-710</span></td></tr>
         <tr><td class="n">3</td><td>Expectation, variance, covariance, correlation</td><td>Appendix B, <span class="nw">pp 691-704</span></td></tr>
         <tr><td class="n">4</td><td>Conditional expectation, LIE, estimators, standard errors</td><td>Appendix C, <span class="nw">pp 714-726</span></td></tr>
+        <tr><td class="n">5</td><td>Consistency, LLN, CLT, confidence intervals, hypothesis tests</td><td>Appendix C, <span class="nw">pp 727-743</span></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="nt" style="font:400 14.5px/1.5 var(--sans);color:var(--muted)">The Wooldridge text is not in the project files, so readings are mapped from the syllabus page ranges. Going by the book's layout, pp 704-710 are likely the normal, chi-square, t and F section. The slides only use the standard normal, so skim it now; it matters once you reach hypothesis testing.</p>
+  <p class="nt" style="font:400 14.5px/1.5 var(--sans);color:var(--muted)">Readings are mapped from the syllabus. Lecture 5 uses the standard normal distribution for approximate inference and introduces Student's t and bootstrap refinements.</p>
   <p class="nt" style="font:400 14.5px/1.5 var(--sans);color:var(--muted)">Boxes with a colored top edge are interactive. Drag, slide and tap them.</p>
 </header>

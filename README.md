@@ -1,6 +1,6 @@
-# Econ 125 study guide: Lectures 1 to 4
+# Econ 125 study guide: Lectures 1 to 5
 
-A study site covering distributions, moments, conditional expectation and sampling, with derivations, worked examples and interactive visuals (including 3D models you can rotate).
+A study site covering distributions, moments, conditional expectation, sampling, consistency, confidence intervals and hypothesis testing, with derivations, worked examples and interactive visuals (including 3D models you can rotate).
 
 Live site: `https://gaarbra.github.io/econ125-study-guide/`
 

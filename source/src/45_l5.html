@@ -1,0 +1,124 @@
+<section class="lec l5" id="l5">
+<header>
+  <h2>Lecture 5: Inference and hypothesis testing</h2>
+  <p class="reading">Wooldridge Appendix C, pp 727-743 (syllabus: Review of Statistics II). Based on Lecture 5, slides 3-33.</p>
+</header>
+<p>Lecture 4 tells us how estimates vary across samples. Lecture 5 uses that sampling distribution to quantify uncertainty and test claims about the population.</p>
+
+<h3>Keep the three spreads separate</h3>
+<div class="tbl"><table>
+  <thead><tr><th>Quantity</th><th>Formula</th><th>What varies?</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Population standard deviation</th><td>$\sigma$</td><td>Individual observations in the population.</td></tr>
+    <tr><th scope="row">Sample standard deviation</th><td>$S=\sqrt{\frac{1}{n-1}\sum_i(Y_i-\bar Y)^2}$</td><td>Observed values within a sample; estimates $\sigma$.</td></tr>
+    <tr><th scope="row">Standard error of the mean</th><td>$\sigma/\sqrt n$, estimated by $S/\sqrt n$</td><td>Sample means across repeated independent samples.</td></tr>
+  </tbody>
+</table></div>
+<p>For iid sampling, $\E[\bar Y]=\mu$ and $\var[\bar Y]=\sigma^2/n$ (slides 3-8). More data makes the mean more precise; it does not make individuals more alike. Revisit the <a href="#l4">Lecture 4 sampling simulation</a> to see this distinction.</p>
+
+<h3>Consistency and the Law of Large Numbers</h3>
+<div class="fx">
+  <p class="nm">Consistency (slide 12)</p>
+  <div class="eq">$$W_n\xrightarrow{p}\theta\quad\Longleftrightarrow\quad\Pr\{|W_n-\theta|>\varepsilon\}\to0$$</div>
+  <p class="nt">For every fixed $\varepsilon>0$, the chance of missing the target by more than that amount goes to zero as the sample grows. We also write $\operatorname{plim}W_n=\theta$.</p>
+</div>
+<div class="fx">
+  <p class="nm">LLN and continuous mapping (slide 14)</p>
+  <div class="eq">$$\bar Y\xrightarrow{p}\mu,\qquad g(W_n)\xrightarrow{p}g(\theta)$$</div>
+  <p class="nt">The lecture assumes iid observations with finite variance for the LLN. The mapping $g$ must be continuous at the limit. Probability limits add and multiply; they divide when the denominator's limit is nonzero.</p>
+</div>
+<details class="dv" open>
+  <summary>Derivation: sample variance and standard deviation are consistent (slide 16)</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">Rewrite the sample variance.</p><div class="eq">$$S^2=\frac{n}{n-1}\left(\frac1n\sum_{i=1}^nY_i^2-\bar Y^2\right)$$</div></li>
+    <li><p class="why">Apply LLN to the first and second moments, then continuous mapping. The slide assumes a finite fourth moment to apply its finite-variance LLN to $Y_i^2$.</p><div class="eq">$$S^2\xrightarrow{p}\E[Y^2]-\mu^2=\sigma^2$$</div></li>
+    <li><p class="why">Take the continuous square root.</p><div class="eq">$$S\xrightarrow{p}\sigma$$</div></li>
+  </ol></div>
+</details>
+<div class="trap">
+  <p class="nm">Unbiasedness and consistency answer different questions</p>
+  <p>Unbiasedness concerns the expectation at a given sample size. Consistency concerns concentration as $n$ grows. Using $Y_1$ alone is unbiased for $\mu$ but generally inconsistent. Dividing the sum of squared deviations by $n$ gives a biased yet consistent variance estimator.</p>
+  <p><strong>Clarification of slide 13:</strong> bias tending to zero together with variance tending to zero is a <em>sufficient</em> condition for consistency, by mean-squared error and Chebyshev's inequality. These are not necessary conditions in full generality; convergence in probability alone does not guarantee convergence of moments.</p>
+</div>
+
+<h3>Central Limit Theorem: concentration versus shape</h3>
+<div class="fx">
+  <p class="nm">CLT for an iid sample mean (slide 19)</p>
+  <div class="eq">$$\frac{\bar Y-\mu}{\sigma/\sqrt n}\xrightarrow{d}N(0,1)$$</div>
+  <div class="eq">$$\bar Y\ \approx\ N\left(\mu,\frac{\sigma^2}{n}\right)$$</div>
+  <p class="nt">Assume $0<\sigma^2<\infty$. LLN says the mean concentrates around $\mu$. CLT describes the approximately normal shape of its standardized error. It does not say the individual observations become normal.</p>
+</div>
+<p>The lognormal income example has mean 75 and standard deviation 25. At $n=100$, the mean's standard error is 2.5; at $n=400$, it is 1.25. Quadrupling sample size halves the standard error. Slides 15 and 20 show both concentration and reduced skewness.</p>
+<p>For $Z\sim N(0,1)$, write $\Phi(z)=\Pr\{Z\le z\}$. The upper-tail probability is $1-\Phi(z)$ (slide 21). Normal approximations can be poor in small, skewed samples (slide 10).</p>
+
+<h3>Confidence intervals</h3>
+<div class="fx">
+  <p class="nm">Approximate 95% interval for a population mean</p>
+  <div class="eq">$$\bar y\pm1.96\frac{s}{\sqrt n}$$</div>
+  <p class="nt">Slide 24 uses the convenient two-sigma rule, estimate $\pm2$ standard errors. The more precise standard-normal critical value is 1.96.</p>
+</div>
+<details class="dv" open>
+  <summary>Derivation: turn a probability statement into an interval</summary>
+  <div class="dvb"><ol class="steps">
+    <li><p class="why">The central 95% of a standard normal lies between -1.96 and 1.96. Use the large-sample approximation with estimated standard error.</p><div class="eq">$$\Pr\left\{-1.96\le\frac{\bar Y-\mu}{S/\sqrt n}\le1.96\right\}\approx0.95$$</div></li>
+    <li><p class="why">Rearrange to isolate the population mean.</p><div class="eq">$$\Pr\left\{\bar Y-1.96\frac{S}{\sqrt n}\le\mu\le\bar Y+1.96\frac{S}{\sqrt n}\right\}\approx0.95$$</div></li>
+  </ol></div>
+</details>
+<div class="ex l5">
+  <p class="nm">Worked example (added): estimating household income</p>
+  <p>Suppose $n=100$, $\bar y=75$ and $s=25$, measured in thousands of dollars. The estimated standard error is $25/\sqrt{100}=2.5$.</p>
+  <div class="eq">$$75\pm1.96(2.5)=[70.10,79.90]$$</div>
+  <p>The slides' two-sigma shortcut gives $[70,80]$. These are intervals for the <strong>population mean</strong>, not intervals containing 95% of household incomes.</p>
+</div>
+<div class="trap">
+  <p class="nm">What 95% confidence means</p>
+  <p>Across repeated samples, about 95% of intervals made this way contain the fixed population mean. After observing the data, the interval either contains the mean or it does not. The estimate is always at its own interval's center; coverage concerns the unknown parameter (clarifying slides 24-25).</p>
+</div>
+
+<h3>Hypothesis tests: null, alternative, statistic, decision</h3>
+<p>Slide 27 tests the claim $H_0:\mu=70$. Choose an alternative and significance level <em>before</em> examining the result: $H_1:\mu>70$, $H_1:\mu<70$, or $H_1:\mu\ne70$.</p>
+<div class="fx">
+  <p class="nm">Test statistic (slide 29)</p>
+  <div class="eq">$$t=\frac{\bar y-\mu_0}{s/\sqrt n}$$</div>
+  <p class="nt">How many estimated standard errors separate your estimate from the null value? Under $H_0$, the statistic is approximately $N(0,1)$ in large samples.</p>
+</div>
+<div class="tbl"><table>
+  <thead><tr><th>Alternative</th><th>Normal-approximation p-value</th><th>Reject at 5% when</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">$\mu>\mu_0$</th><td>$1-\Phi(t)$</td><td>$t\ge1.645$</td></tr>
+    <tr><th scope="row">$\mu<\mu_0$</th><td>$\Phi(t)$</td><td>$t\le-1.645$</td></tr>
+    <tr><th scope="row">$\mu\ne\mu_0$</th><td>$2[1-\Phi(|t|)]$</td><td>$|t|\ge1.96$</td></tr>
+  </tbody>
+</table></div>
+<p>Critical values above are rounded. The p-value is the probability, <strong>assuming the null is true</strong>, of a statistic at least as extreme in the direction(s) of the chosen alternative. Reject if $p\le\alpha$; otherwise <strong>fail to reject</strong>. A p-value is not the probability that the null is true, nor the probability your specific decision is mistaken.</p>
+<div class="ex l5">
+  <p class="nm">Worked example continued: test a mean of 70</p>
+  <div class="eq">$$t=\frac{75-70}{2.5}=2$$</div>
+  <p>Two-sided: $p\approx0.0455$, so reject at 5% but not at 1%. Upper-sided: $p\approx0.0228$, so reject at 5%. Lower-sided: $p\approx0.9772$, so fail to reject; the estimate points in the opposite direction.</p>
+  <p>The 95% normal interval $[70.10,79.90]$ excludes 70, agreeing with the two-sided 5% test. Use matching critical values for this equivalence: the rounded two-sigma interval can differ at the boundary.</p>
+</div>
+
+<h3>Errors, significance and power</h3>
+<div class="tbl"><table>
+  <thead><tr><th>Decision</th><th>Null is true</th><th>Null is false</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Reject</th><td>Type I error</td><td>Correct; probability is power</td></tr>
+    <tr><th scope="row">Fail to reject</th><td>Correct</td><td>Type II error</td></tr>
+  </tbody>
+</table></div>
+<p>The significance level $\alpha$ controls the rejection probability under the null (approximately for an asymptotic test). Power is $1-\beta$, where $\beta$ is the Type II error probability at a specified alternative. It depends on the true effect, sample size, variability, and test direction (slides 28, 31-32). Confidence level is $1-\alpha$, not $\alpha$.</p>
+<p>For the slides' true mean of 75, a test of 70 gains power with larger samples in the upper-sided and two-sided cases. A lower-sided test looks in the wrong direction. Failing to reject never establishes that the null is true.</p>
+
+<h3>Finite-sample refinements</h3>
+<p>Slide 33 introduces Student's t and the bootstrap. With iid <strong>normally distributed observations</strong> and unknown variance, the sample-mean statistic follows an exact $t_{n-1}$ distribution under the null. Use its critical values and cdf instead of the normal ones. With nonnormal data, estimating the standard error alone does not make a small-sample t-test exact; the lecture's large-sample approximation still needs care. The bootstrap uses resampling to approximate a sampling distribution.</p>
+
+<details class="dv">
+  <summary>Check yourself: four quick questions</summary>
+  <div class="dvb"><ol>
+    <li><strong>Does LLN make household incomes normal?</strong> No. It makes the sample mean converge to the population mean; CLT concerns standardized sampling errors.</li>
+    <li><strong>If sample size rises from 100 to 400, what happens to standard error?</strong> It halves, holding population variability fixed.</li>
+    <li><strong>Does $p=0.04$ mean a 4% chance that the null is true?</strong> No. It is a tail probability computed under the null.</li>
+    <li><strong>Does a two-sided 95% interval containing the null imply rejection at 5%?</strong> No, for the matching test it implies failure to reject when the null is strictly inside the interval.</li>
+  </ol></div>
+</details>
+</section>

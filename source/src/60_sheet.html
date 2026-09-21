@@ -55,4 +55,22 @@
     <div class="eq">$$S^2=\frac{1}{n-1}\sum(Y_i-\bar Y)^2$$</div>
     <div class="eq">$$\E[S^2]=\sigma^2$$</div></div>
 </div>
+<h3>Inference and testing (Lecture 5)</h3>
+<div class="sheet">
+  <div class="sc l5"><p class="nm">LLN and CLT (iid, finite variance)</p>
+    <div class="eq">$$\bar Y\xrightarrow{p}\mu$$</div>
+    <div class="eq">$$\frac{\bar Y-\mu}{\sigma/\sqrt n}\xrightarrow{d}N(0,1)$$</div></div>
+  <div class="sc l5"><p class="nm">Estimated SE and approximate 95% CI</p>
+    <div class="eq">$$\widehat{\se}=s/\sqrt n$$</div>
+    <div class="eq">$$\bar y\pm1.96\widehat{\se}$$</div></div>
+  <div class="sc l5"><p class="nm">Test statistic and decision</p>
+    <div class="eq">$$t=\frac{\bar y-\mu_0}{s/\sqrt n}$$</div>
+    <p class="nt">Reject if $p\le\alpha$; otherwise fail to reject.</p></div>
+  <div class="sc l5"><p class="nm">Normal-approximation p-values</p>
+    <div class="eq">$$\begin{aligned}p_{<}&=\Phi(t)\\p_{>}&=1-\Phi(t)\\p_{\ne}&=2[1-\Phi(|t|)]\end{aligned}$$</div></div>
+  <div class="sc l5"><p class="nm">Errors and power</p>
+    <p class="nt">Type I: reject a true null. Type II: fail to reject a false null. Power $=1-\beta$; confidence level $=1-\alpha$.</p></div>
+  <div class="sc l5"><p class="nm">Finite-sample normal population</p>
+    <p class="nt">With iid normal data and unknown variance, use $t_{n-1}$ instead of $N(0,1)$ for the sample-mean test and interval.</p></div>
+</div>
 </section>
